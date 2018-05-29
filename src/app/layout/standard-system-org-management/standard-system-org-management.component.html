@@ -1,0 +1,6 @@
+<nav mat-tab-nav-bar>
+  <a mat-tab-link *ngFor="let tab of tabs" (click)="selectTab(tab.value)" [active]="selectedTab===tab.value">{{tab.name}}</a>
+</nav>
+
+<app-standard-committee *ngIf="selectedTab===0"></app-standard-committee>
+<app-standard-network *ngIf="selectedTab===1"></app-standard-network>

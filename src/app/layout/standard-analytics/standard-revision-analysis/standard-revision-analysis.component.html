@@ -1,0 +1,60 @@
+<div class="panel">
+  <div class="panel-header">
+    <div class="panel-title">标准变更统计</div>
+  </div>
+  <div class="panel-content">
+    <app-standard-revision-type-chart></app-standard-revision-type-chart>
+  </div>
+</div>
+
+<div class="panel">
+  <div class="panel-header">
+    <div class="panel-title">标准变更趋势统计</div>
+  </div>
+  <div class="panel-content">
+    <app-standard-revision-chart [mainDimension]="standardRevisionMainDimension" [metrics]="standardRevisionMetrics"></app-standard-revision-chart>
+  </div>
+</div>
+
+<div class="panel">
+  <div class="panel-header">
+    <div class="panel-title">不同标准类型使用统计</div>
+  </div>
+  <div class="panel-content">
+    <div>
+      <app-time-span-toggle (change)="onStandardCategoryTimeSpanToggle($event)"></app-time-span-toggle>
+    </div>
+    <app-standard-usage-chart [mainDimension]="standardUsageStandardCategoryMainDimension" [metrics]="standardUsageMetrics" [timeSpan]="standardUsageStandardCategoryTimeSpan"></app-standard-usage-chart>
+  </div>
+</div>
+
+<div class="panel">
+  <div class="panel-header">
+    <div class="panel-title">不同标准体系使用统计</div>
+  </div>
+  <div class="panel-content">
+    <div>
+      <app-time-span-toggle (change)="onStandardSystemTimeSpanToggle($event)"></app-time-span-toggle>
+    </div>
+    <app-standard-usage-chart [mainDimension]="standardUsageStandardSystemMainDimension" [metrics]="standardUsageMetrics" [timeSpan]="standardUsageStandardSystemTimeSpan"></app-standard-usage-chart>
+  </div>
+</div>
+
+<div class="panel-wrapper" fxLayout="row" fxLayoutGap="16px">
+  <div class="panel" fxFlex="50%">
+    <div class="panel-header">
+      <div class="panel-title">岗位与标准</div>
+    </div>
+    <div class="panel-content">
+      <app-post-standard-asset-table></app-post-standard-asset-table>
+    </div>
+  </div>
+  <div class="panel" fxFlex="50%">
+    <div class="panel-header">
+      <div class="panel-title">部门与标准</div>
+    </div>
+    <div class="panel-content">
+      <app-department-standard-asset-table></app-department-standard-asset-table>
+    </div>
+  </div>
+</div>

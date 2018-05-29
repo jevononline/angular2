@@ -1,0 +1,74 @@
+<div class="panel">
+  <div class="panel-header">
+    <div fxFlex fxLayout="row">
+      <div fxFlex="50" fxLayoutAlign="start center">
+        <ng-container *ngIf="authService.check('/process-management/processes@create')">
+          <button mat-raised-button color="primary" [matMenuTriggerFor]="menu">发起计划</button>
+          <mat-menu #menu="matMenu" [overlapTrigger]="false">
+            <button *ngFor="let item of planTypeList" mat-menu-item (click)="openProcessFormDialog({action:'create',type:item.value})">{{item.name}}</button>
+          </mat-menu>
+        </ng-container>
+      </div>
+      <div fxFlex="50" fxLayout="row" fxLayoutAlign="end center">
+        <mat-form-field class="is-half" floatPlaceholder="never">
+          <mat-icon matPrefix>search</mat-icon>
+          <input matInput #keyword placeholder="搜索">
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <div class="panel-body">
+    <ux-table-container>
+      <mat-table #table [dataSource]="dataSource" matSort matSortActive="id" matSortDisableClear matSortDirection="desc">
+        <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> 序号 </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> 名称 </mat-header-cell>
+          <mat-cell *matCellDef="let row">{{row.name}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="type">
+          <mat-header-cell *matHeaderCellDef> 类型 </mat-header-cell>
+          <mat-cell *matCellDef="let row">{{row.type|processType}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="createdBy">
+          <mat-header-cell *matHeaderCellDef> 创建人 </mat-header-cell>
+          <mat-cell *matCellDef="let row">{{row.createdBy.staff?.fullName}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="createdAt">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> 创建时间 </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.createdAt | dateTime}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef> 操作 </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <button mat-icon-button matTooltip="查看" *ngIf="authService.check('/process-management/processes@read')" (click)="viewProcessDetail(row)">
+              <mat-icon>insert_drive_file</mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="设置节点截止日期" *ngIf="authService.check('/process-management/processes@update')" (click)="openProcessSettingDialog(row)">
+              <mat-icon>timer</mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="编辑" *ngIf="authService.check('/process-management/processes@update')" [disabled]="!!row.isCompleted" (click)="openProcessFormDialog({action:'update',type:row.value,node:row})">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="删除" *ngIf="authService.check('/process-management/processes@delete')" (click)="openDeletionDialog(row)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+
+      <mat-paginator #paginator [length]="dataSource.total" [pageSize]="appConfig.pageSize" [pageSizeOptions]="appConfig.pageSizeOptions">
+      </mat-paginator>
+    </ux-table-container>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+<div class="widget">
+  <div class="widget-header" fxLayout="row" fxLayoutAlign="start center">
+    <div fxFlex fxLayout="row" fxLayoutAlign="start center">
+      <mat-icon>assignment</mat-icon>待办任务
+    </div>
+    <button mat-icon-button matTooltip="查看更多" matTooltipPosition="left" [routerLink]="['/process-management/tasks']">
+      <mat-icon>more_horiz</mat-icon>
+    </button>
+  </div>
+  <div class="widget-body">
+    <app-task-list></app-task-list>
+  </div>
+</div>

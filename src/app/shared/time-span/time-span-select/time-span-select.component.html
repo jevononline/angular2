@@ -1,0 +1,21 @@
+<app-year-select placeholder="年度" [floatPlaceholder]="floatPlaceholder" name="year" [disabled]="disabled" (change)="onChange()" [(ngModel)]="year" [required]="required" *ngIf="detectTimeSpanLevel(1)"></app-year-select>
+
+
+<mat-form-field *ngIf="detectTimeSpanLevel(2)" [floatPlaceholder]="floatPlaceholder">
+  <mat-select placeholder="季度" name="quarter" [disabled]="disabled" (selectionChange)="onChange()" [(ngModel)]="quarter" [required]="required">
+    <mat-option *ngFor="let item of quarters" [value]="item">
+      {{item}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<mat-form-field *ngIf="detectTimeSpanLevel(4)" [floatPlaceholder]="floatPlaceholder">
+  <mat-select placeholder="月度" name="month" [disabled]="disabled" (selectionChange)="onChange()" [(ngModel)]="month" [required]="required">
+    <mat-option *ngFor="let item of months" [value]="item">
+      {{item}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+
+<app-time-span-level-select placeholder="年／季／月" [floatPlaceholder]="floatPlaceholder" name="selectedTimeSpanLevel" [disabled]="disabled" [timeSpanLevel]="timeSpanLevel" (change)="onTimeSpanLevelChange()" [(ngModel)]="selectedTimeSpanLevel" *ngIf="timeSpanLevel>0"></app-time-span-level-select>

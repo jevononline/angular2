@@ -1,0 +1,13 @@
+<mat-form-field>
+  <mat-select [placeholder]="placeholder" name="staff" class="is-full" [multiple]="multiple" [disabled]="disabled" [compareWith]="compareWith" [(ngModel)]="myModel" [required]="required" (selectionChange)="onChange()" (closed)="myOnClose()">
+    <div class="select-filter-bar">
+      <mat-form-field class="is-full" floatPlaceholder="never">
+        <mat-icon matPrefix>search</mat-icon>
+        <input matInput #keyword placeholder="搜索" (keyup)="filterList(keyword.value)">
+      </mat-form-field>
+    </div>
+    <mat-option *ngFor="let staff of list" [disabled]="isDisabled(staff)" [value]="staff">
+      {{ staff.fullName }}[{{ staff.staffNo }}]
+    </mat-option>
+  </mat-select>
+</mat-form-field>

@@ -1,0 +1,26 @@
+<div class="panel-wrapper" fxLayout="row" fxLayoutGap="16px">
+  <div fxFlex="none" class="panel">
+    <div class="panel-content">
+      <app-standard-system-treeview [autoActivate]="true" (activate)="onActivate($event)"></app-standard-system-treeview>
+    </div>
+  </div>
+
+  <div fxFlex class="panel">
+    <div class="panel-header">
+      <div fxFlex fxLayout="row">
+        <div fxFlex="50" fxLayoutAlign="start center">
+        </div>
+        <div fxFlex="50" fxLayout="row" fxLayoutAlign="end center">
+          <mat-form-field class="is-half" floatPlaceholder="never">
+            <mat-icon matPrefix>search</mat-icon>
+            <input matInput #keyword placeholder="搜索">
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="panel-body" *ngIf="isReady">
+      <app-standard-system-table [filter]="filter"></app-standard-system-table>
+    </div>
+  </div>
+
+</div>

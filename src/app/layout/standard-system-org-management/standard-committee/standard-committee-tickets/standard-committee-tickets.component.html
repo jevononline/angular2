@@ -1,0 +1,88 @@
+<div class="panel">
+  <div class="panel-header">
+    <div fxFlex fxLayout="row">
+      <div fxFlex="50" fxLayoutAlign="start center">
+        <button mat-raised-button color="primary" *ngIf="authService.check('/standard-system-org-management@standard-committee@add-staff')" (click)="openFormDialog({action:'create',node:standardCommitteeService.standardCommittee})">添加人员</button>
+
+      </div>
+      <div fxFlex="50" fxLayout="row" fxLayoutAlign="end center">
+        <mat-form-field class="is-half" floatPlaceholder="never">
+          <mat-icon matPrefix>search</mat-icon>
+          <input matInput #keyword placeholder="搜索">
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <div class="panel-body">
+    <ux-table-container>
+      <mat-table #table [dataSource]="dataSource" matSort matSortActive="createdAt" matSortDisableClear matSortDirection="desc">
+
+        <ng-container matColumnDef="staffNo">
+          <mat-header-cell *matHeaderCellDef> 工号 </mat-header-cell>
+          <mat-cell *matCellDef="let row">{{row.staff?.staffNo}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="fullName">
+          <mat-header-cell *matHeaderCellDef> 姓名 </mat-header-cell>
+          <mat-cell *matCellDef="let row">{{row.staff?.fullName}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="position">
+          <mat-header-cell *matHeaderCellDef> 职务 </mat-header-cell>
+          <mat-cell *matCellDef="let row">{{row.content?.position}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="duties">
+          <mat-header-cell *matHeaderCellDef> 组织职责 </mat-header-cell>
+          <mat-cell *matCellDef="let row">{{row.content?.duties}} </mat-cell>
+        </ng-container>
+
+        <!-- 
+      <ng-container matColumnDef="status">
+        <mat-header-cell *matHeaderCellDef> 状态 </mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.staff?.status | staffStatus}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="posts">
+        <mat-header-cell *matHeaderCellDef> 所属岗位 </mat-header-cell>
+        <mat-cell *matCellDef="let row">{{displayPosts(row.staff?.posts)}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="loginId">
+        <mat-header-cell *matHeaderCellDef> 登录名 </mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.staff?.user?.loginId}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="isEnabled">
+        <mat-header-cell *matHeaderCellDef> 账号状态 </mat-header-cell>
+        <mat-cell *matCellDef="let row"> </mat-cell>
+      </ng-container> 
+      -->
+
+        <ng-container matColumnDef="createdAt">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> 加入日期 </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.createdAt | dateTime}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef class="has-text-centered"> 操作 </mat-header-cell>
+          <mat-cell *matCellDef="let row" class="has-text-centered">
+            <button mat-icon-button matTooltip="编辑" *ngIf="authService.check('/standard-system-org-management@standard-committee@update-staff')" (click)="openFormDialog({action:'update',node:standardCommitteeService.standardCommittee,id:row.id})">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="移除" *ngIf="authService.check('/standard-system-org-management@standard-committee@remove-staff')" (click)="openDeletionDialog(row)">
+              <mat-icon>remove_circle_outline</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+
+      <mat-paginator #paginator [length]="dataSource.total" [pageSize]="appConfig.pageSize" [pageSizeOptions]="appConfig.pageSizeOptions">
+      </mat-paginator>
+    </ux-table-container>
+
+  </div>
+</div>

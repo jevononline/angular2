@@ -1,0 +1,35 @@
+<form novalidate autocomplete="off" (ngSubmit)="onSubmit()" #form="ngForm">
+  <mat-dialog-content>
+    <h2 mat-dialog-title *ngIf="data.action === 'create'">添加人员</h2>
+    <h2 mat-dialog-title *ngIf="data.action === 'update'">编辑人员</h2>
+    <div class="form-group">
+      <mat-form-field class="is-full">
+        <input matInput placeholder="添加至" [disabled]="true" [value]="data.node.name">
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <app-staff-select placeholder="人员" name="staffList" level="descendant" required [disabled]="data.action==='update'" [(ngModel)]="model.staff"></app-staff-select>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field class="is-full">
+        <input matInput placeholder="职务" name="position" required [(ngModel)]="model.content.position" #position="ngModel">
+        <mat-error *ngIf="position.errors?.required">
+          职务必填
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field class="is-full">
+        <input matInput placeholder="组织职责" name="duties" [(ngModel)]="model.content.duties">
+      </mat-form-field>
+    </div>
+
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button type="submit" mat-raised-button color="primary" [disabled]="form.pristine || form.invalid || submitting">提交</button>
+    <button type="button" mat-button mat-dialog-close>取消</button>
+  </mat-dialog-actions>
+</form>

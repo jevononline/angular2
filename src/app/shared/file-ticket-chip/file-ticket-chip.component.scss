@@ -1,0 +1,15 @@
+:host {
+  display: inline-block;
+}
+
+.file-ticket-chip {
+  font-size: 12px;
+  .mat-icon {
+    width: 16px;
+    height: 16px;
+    transform: scale(.7);
+  }
+  span {
+    cursor: pointer;
+  }
+}

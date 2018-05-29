@@ -1,0 +1,76 @@
+<div class="panel">
+  <div class="panel-header">
+    <div fxFlex fxLayout="row">
+      <div class="actions" fxFlex="50" fxLayoutAlign="start center">
+        <button mat-raised-button color="primary" *ngIf="authService.check('/superior-documents/:form/1/:id')" [routerLink]="['create',1,0]">新建法律法规</button>
+        <button mat-raised-button color="primary" (click)="openImportDialog()">批量导入</button>
+      </div>
+      <div fxFlex="50" fxLayout="row" fxLayoutAlign="end center" class="actions">
+        <app-regulation-category-select placeholder="类型" name="category" multiple (close)="onCategorySelectClose($event)"></app-regulation-category-select>
+        <mat-form-field class="is-half" floatPlaceholder="never">
+          <mat-icon matPrefix>search</mat-icon>
+          <input matInput #keyword placeholder="搜索">
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <div class="panel-body">
+    <ux-table-container>
+      <mat-table #table [dataSource]="dataSource" matSort matSortActive="id" matSortDisableClear matSortDirection="desc">
+        <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> 序号 </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="category">
+          <mat-header-cell *matHeaderCellDef> 类型 </mat-header-cell>
+          <mat-cell *matCellDef="let row">{{row.category.name}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="documentNo">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> 发布文号 </mat-header-cell>
+          <mat-cell *matCellDef="let row">{{row.documentNo}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="documentName">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> 名称 </mat-header-cell>
+          <mat-cell *matCellDef="let row">{{row.documentName}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="issuer">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> 发文单位 </mat-header-cell>
+          <mat-cell *matCellDef="let row">{{row.issuer}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="executeDate">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> 实施日期 </mat-header-cell>
+          <mat-cell *matCellDef="let row">{{row.executeDate}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef> 操作 </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <button mat-icon-button matTooltip="下载" *ngIf="authService.check('/superior-documents@download')" [disabled]="!row.file" [appDownload]="{files:[row.file]}">
+              <mat-icon>file_download</mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="查看" *ngIf="authService.check('/superior-documents/:form/0/:id')" [routerLink]="['read',0,row.id]">
+              <mat-icon>insert_drive_file</mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="编辑" *ngIf="authService.check('/superior-documents/:form/2/:id')" [routerLink]="['update',1,row.id]">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="删除" *ngIf="authService.check('/superior-documents@delete')" (click)="openDeletionDialog(row)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+
+      <mat-paginator #paginator [length]="dataSource.total" [pageSize]="appConfig.pageSize" [pageSizeOptions]="appConfig.pageSizeOptions">
+      </mat-paginator>
+    </ux-table-container>
+  </div>
+</div>

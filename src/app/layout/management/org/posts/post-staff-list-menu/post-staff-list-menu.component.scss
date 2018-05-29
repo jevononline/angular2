@@ -1,0 +1,16 @@
+.post-staff-list-menu {
+  max-width: none !important;
+  padding: 0 8px;
+  .post-staff-list-menu-content {
+    overflow-y: scroll;
+    max-height: 240px;
+  }
+}
+
+.trigger {
+  cursor: pointer;
+  &[disabled] {
+    cursor: default;
+    background: #ccc;
+  }
+}

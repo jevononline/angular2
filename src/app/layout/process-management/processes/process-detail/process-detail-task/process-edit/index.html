@@ -1,0 +1,59 @@
+<div fxFlex fxLayout="column">
+	<div class="task-info" fxLayout="row" fxLayoutAlign="start start">
+		<!-- <div class="title">操作部门：{{task.name}}</div> -->
+		<div class="title">操作人：{{task.createdBy.staff.fullName}}</div>
+		<div class="title">操作时间：{{task.createdAt | date: 'yyyy-MM-dd HH:mm:ss'}}</div>
+	</div>
+	<div class="title">标准列表</div>
+	<ux-table-container>
+		<mat-table #table [dataSource]="dataSource">
+			<ng-container matColumnDef="type">
+			  <mat-header-cell *matHeaderCellDef> 标准类型 </mat-header-cell>
+			  <mat-cell *matCellDef="let row"> {{row.type}} </mat-cell>
+			</ng-container>
+
+			<ng-container matColumnDef="standardNo">
+			  <mat-header-cell *matHeaderCellDef> 标准编号 </mat-header-cell>
+			  <mat-cell *matCellDef="let row"> {{row.standard.no}} </mat-cell>
+			</ng-container>
+
+			<ng-container matColumnDef="standardName">
+			  <mat-header-cell *matHeaderCellDef> 标准名称 </mat-header-cell>
+			  <mat-cell *matCellDef="let row"> {{row.standard.name}} </mat-cell>
+			</ng-container>
+
+			<ng-container matColumnDef="standardSystem">
+			  <mat-header-cell *matHeaderCellDef> 标准体系 </mat-header-cell>
+			  <mat-cell *matCellDef="let row"> {{row.standardSystem.name}} </mat-cell>
+			</ng-container>
+
+			<ng-container matColumnDef="department">
+			  <mat-header-cell *matHeaderCellDef> 归口部门 </mat-header-cell>
+			  <mat-cell *matCellDef="let row"> {{row.department.name}} </mat-cell>
+			</ng-container>
+
+			<ng-container matColumnDef="drafter">
+			  <mat-header-cell *matHeaderCellDef> 起草人 </mat-header-cell>
+			  <mat-cell *matCellDef="let row"> {{row.drafter.staff.fullName}} </mat-cell>
+			</ng-container>
+
+			<ng-container matColumnDef="finishTime">
+			  <mat-header-cell *matHeaderCellDef> 完成日期 </mat-header-cell>
+			  <mat-cell *matCellDef="let row"> {{row.finishTime}} </mat-cell>
+			</ng-container>
+
+			<ng-container matColumnDef="actions">
+			  <mat-header-cell *matHeaderCellDef> 操作 </mat-header-cell>
+			  <mat-cell *matCellDef="let row"> 
+			  	<button mat-icon-button matTooltip="下载" [disabled]="!row.preparationNote">
+			  	  <mat-icon>file_download</mat-icon>
+			  	</button>
+			  </mat-cell>
+			</ng-container>
+
+			<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+			<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+		</mat-table>
+	</ux-table-container>
+</div>

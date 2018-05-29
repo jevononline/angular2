@@ -1,0 +1,25 @@
+:host {
+  display: block;
+}
+
+.metric-bar {
+  span {
+    margin: 0 8px;
+    line-height: 56px;
+  }
+}
+
+.metric-datatable{
+  position: absolute;
+  z-index: 99;
+  float: right;
+  width: 100%;
+  .metric-datatable-button{
+    float: right;
+  }
+  .metric-datatable-button:hover{
+    color: #297cbb !important;
+    cursor: pointer;
+  }
+}
+

@@ -1,0 +1,14 @@
+<div fxLayout="row" fxLayoutGap="16px">
+  <div fxFlex="none" class="panel">
+    <div class="panel-content">
+      <app-standard-network-treeview [autoActivate]="true" (activate)="onActivate($event)"></app-standard-network-treeview>
+    </div>
+  </div>
+  <div fxFlex *ngIf="isReady">
+
+
+    <app-standard-network-tickets></app-standard-network-tickets>
+
+
+  </div>
+</div>

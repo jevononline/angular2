@@ -1,0 +1,16 @@
+<mat-form-field>
+  <mat-select [placeholder]="placeholder" name="post" class="is-full" [multiple]="multiple" [disabled]="disabled" [compareWith]="compareWith" [(ngModel)]="myModel" #ngModelCtrl="ngModel" [required]="required" (selectionChange)="onChange()" (opened)="onOpen()" (closed)="onClose()">
+    <ng-container *ngIf="displayMultipleToolBar">
+      <div class="select-multiple-tool-bar" fxLayout="row" fxLayoutAlign="end center">
+        <a (click)="selectAll()">全选</a>
+        <a (click)="clear()">清空</a>
+      </div>
+    </ng-container>
+    <mat-optgroup *ngFor="let department of list" [label]="department.name">
+      <mat-option *ngFor="let post of department.posts" [disabled]="post.isDisabled" [value]="post">
+        {{ post.name }}
+      </mat-option>
+    </mat-optgroup>
+  </mat-select>
+
+</mat-form-field>

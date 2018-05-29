@@ -1,0 +1,40 @@
+<nav mat-tab-nav-bar>
+  <a mat-tab-link [routerLink]="['/standard-management/standards',{view:0}]" [active]="view===0">
+    企业标准
+  </a>
+  <a mat-tab-link [routerLink]="['/standard-management/standards',{view:2}]" [active]="view===2" *ngIf="authService.currentUser.charge &&  authService.currentUser.charge.length">
+     部门标准
+  </a>
+  <a mat-tab-link [routerLink]="['/standard-management/standards',{view:1}]" [active]="view===1">
+    本岗位标准
+  </a>
+</nav>
+<div fxLayout="row" fxLayoutGap="16px">
+  <div fxFlex="none" class="panel">
+    <div class="panel-content">
+      <app-standard-system-treeview [view]="view" [autoActivate]="true" [activated]="standardSystem" (activate)="onActivate($event)"></app-standard-system-treeview>
+    </div>
+  </div>
+  <div fxFlex>
+    <div class="panel">
+      <div class="panel-header">
+        <div fxFlex fxLayout="row">
+          <div class="actions" fxFlex="50" fxLayoutAlign="start center">
+            <button mat-raised-button color="primary" *ngIf="authService.check('/standard-management/standards/:form/1/:id')&&view===0" [disabled]="!standardSystem || standardSystem.level===1" [routerLink]="['create',1,0]">新建标准</button>
+            <button mat-raised-button color="primary" *ngIf="authService.check('/standard-management/standards@import')&&view===0" (click)="openImportDialog()">批量导入</button>
+          </div>
+          <div fxFlex="50" fxLayout="row" fxLayoutAlign="end center">
+            <app-standard-advanced-filter (set)="onSetAdvancedFilter($event)"></app-standard-advanced-filter>
+            <mat-form-field class="is-half" floatPlaceholder="never">
+              <mat-icon matPrefix>search</mat-icon>
+              <input matInput #keyword placeholder="搜索">
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="panel-body" *ngIf="isReady">
+        <app-standard-table #dataTable [standardSystem]="standardSystem" [view]="view" [filter]="filter" [advancedFilter]="advancedFilter" [ngDisabled]="authService.currentUser.charge && !authService.currentUser.charge.length"></app-standard-table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,62 @@
+<div class="panel">
+  <div class="panel-content">
+    <form novalidate autocomplete="off" (ngSubmit)="onSubmit()" #form="ngForm">
+
+
+      <div class="form-group">
+        <app-staff-select placeholder="关联人员" name="staff" [disabled]="action==='update' && hasLinkedStaff" required level="descendant" [(ngModel)]="model.staff"></app-staff-select>
+      </div>
+
+
+      <div class="form-group">
+        <mat-form-field class="is-one-quarter">
+          <input matInput placeholder="登录名" name="loginId" required minlength="4" maxlength="16" validateUnique validateUrl="/api/users/availability/{{model.id}}/login-id" [(ngModel)]="model.loginId" #loginId="ngModel">
+          <mat-error *ngIf="loginId.errors?.required">
+            登录名必填
+          </mat-error>
+          <mat-error *ngIf="loginId.errors?.minlength">
+            登录名最少4个字符
+          </mat-error>
+          <mat-error *ngIf="loginId.errors?.maxlength">
+            登录名最多16个字符
+          </mat-error>
+          <mat-error *ngIf="loginId.errors?.validateUnique">
+            登录名已被占用
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-group" *ngIf="action==='create'">
+        <mat-form-field class="is-one-quarter">
+          <input matInput placeholder="密码" name="password" type="password" required minlength="6" maxlength="32" [(ngModel)]="model.password" #password="ngModel">
+          <mat-error *ngIf="password.errors?.required">
+            密码必填
+          </mat-error>
+          <mat-error *ngIf="password.errors?.minlength">
+            密码最少6个字符
+          </mat-error>
+          <mat-error *ngIf="password.errors?.maxlength">
+            密码最多32字符
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-group">
+        <label>账号状态</label>
+        <mat-slide-toggle name="status" color="primary" [(ngModel)]="model.isEnabled">
+          <span *ngIf="model.isEnabled">启用</span>
+          <span *ngIf="!model.isEnabled">禁用</span>
+        </mat-slide-toggle>
+      </div>
+
+      <div class="form-group">
+        <app-role-select placeholder="关联角色" name="roles" multiple required [(ngModel)]="model.roles"></app-role-select>
+      </div>
+
+      <div class="form-actions" fxLayout="row">
+        <button type="submit" mat-raised-button color="primary" [disabled]="form.pristine || form.invalid || form.pending || submitting">提交</button>
+        <a mat-button [routerLink]="['/management/permission/users']">取消</a>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,83 @@
+<div class="panel">
+  <div class="panel-header">
+    <div fxFlex fxLayout="row">
+      <div fxFlex="50" fxLayoutAlign="start center">
+        <button mat-raised-button color="primary" *ngIf="mode==='management'" (click)="openImportDialog()">批量导入</button>
+      </div>
+      <div fxFlex="50" fxLayout="row" fxLayoutAlign="end center" class="actions">
+        <ng-container *ngIf="view===1">
+          <app-department-select placeholder="所属部门" name="departments" [multiple]="true" [(ngModel)]="departments" (close)="onDepartmentSelectClose($event)"></app-department-select>
+          <app-post-select placeholder="岗位" name="posts" [multiple]="true" [displayMultipleToolBar]="true" [departments]="departments" [(ngModel)]="posts" (close)="onPostSelectClose($event)" #postSelect="appPostSelect"></app-post-select>
+        </ng-container>
+        <ng-container *ngIf="view===2">
+          <app-standard-system-select placeholder="所属体系" name="standardSystems" [multiple]="true" [(ngModel)]="standardSystems" (close)="onStandardSystemSelectClose($event)"></app-standard-system-select>
+          <app-standard-select placeholder="标准" name="standards" [multiple]="true" [displayMultipleToolBar]="true" [standardSystems]="standardSystems" [(ngModel)]="standards" (close)="onStandardSelectClose($event)" #standardSelect="appStandardSelect"></app-standard-select>
+        </ng-container>
+        <mat-form-field class="is-half" floatPlaceholder="never">
+          <mat-icon matPrefix>search</mat-icon>
+          <input matInput #keyword placeholder="搜索">
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <div class="panel-body">
+    <ux-table-container>
+      <mat-table #table [dataSource]="dataSource" matSort matSortActive="id" matSortDisableClear matSortDirection="desc">
+
+        <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> 序号 </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="postName">
+          <mat-header-cell *matHeaderCellDef> 岗位名称 </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            {{row.post.name}}
+            <app-post-staff-list-menu [post]="row.post"></app-post-staff-list-menu>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="departmentName">
+          <mat-header-cell *matHeaderCellDef> 所属部门 </mat-header-cell>
+          <mat-cell *matCellDef="let row">{{row.post.department.name}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="standardNo">
+          <mat-header-cell *matHeaderCellDef> 标准编号 </mat-header-cell>
+          <mat-cell *matCellDef="let row">{{row.standard.standardNo}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="standardName">
+          <mat-header-cell *matHeaderCellDef> 标准名称 </mat-header-cell>
+          <mat-cell *matCellDef="let row">{{row.standard.name}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="createdBy">
+          <mat-header-cell *matHeaderCellDef> 关联人 </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.createdBy.staff.fullName || row.createdBy.loginId }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="createdAt">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> 关联时间 </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.createdAt | dateTime}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef> 操作 </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <button mat-icon-button matTooltip="移除" (click)="openRemoveDialog(row)">
+              <mat-icon>remove_circle</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+      </mat-table>
+      <mat-paginator #paginator [length]="dataSource.total" [pageSize]="appConfig.pageSize" [pageSizeOptions]="appConfig.pageSizeOptions">
+      </mat-paginator>
+
+    </ux-table-container>
+  </div>
+</div>

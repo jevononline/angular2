@@ -1,0 +1,42 @@
+:host {
+  display: inline-block;
+}
+
+.upload-container {
+  font-size: 12px;
+  ul {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.upload-trigger-container {
+  overflow: hidden;
+  position: relative;
+  display: inline-block;
+  .trigger {
+    cursor: pointer;
+    position: absolute;
+    left: -99px;
+    top: -99px;
+    opacity: 0;
+    font-size: 360px;
+    &[disabled] {
+      cursor: default;
+    }
+  }
+}
+
+.uploaded-file-list-container {
+  &:after {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    width: 0;
+    vertical-align: middle;
+  }
+  .single {
+    display: inline-block;
+    vertical-align: middle;
+  }
+}

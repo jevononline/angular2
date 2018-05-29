@@ -1,0 +1,20 @@
+<div class="panel-wrapper" fxLayout="row" fxLayoutGap="16px">
+  <div fxFlex="none" class="panel">
+    <div class="panel-content">
+      <app-department-treeview [autoActivate]="true" (activate)="onActivate($event)"></app-department-treeview>
+    </div>
+  </div>
+  <div fxFlex class="panel">
+    <div class="panel-content" *ngIf="isReady">
+
+      <nav mat-tab-nav-bar>
+        <a mat-tab-link *ngFor="let tab of tabs" (click)="selectTab(tab.value)" [active]="selectedTab===tab.value">{{tab.name}}</a>
+      </nav>
+
+      <app-departments *ngIf="selectedTab===0"></app-departments>
+      <app-posts *ngIf="selectedTab===1"></app-posts>
+      <app-staff *ngIf="selectedTab===2"></app-staff>
+
+    </div>
+  </div>
+</div>

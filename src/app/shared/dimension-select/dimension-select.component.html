@@ -1,0 +1,8 @@
+<mat-form-field>
+  <mat-select [placeholder]="placeholder" name="dimension" [multiple]="multiple" [required]="required" [disabled]="disabled" [compareWith]="compareWith" [(ngModel)]="myModel" (selectionChange)="onChange()" (opened)="onOpen()" (closed)="onClose()">
+    <mat-option>无</mat-option>
+    <mat-option *ngFor="let item of list" [value]="item">
+      {{ item.name }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>

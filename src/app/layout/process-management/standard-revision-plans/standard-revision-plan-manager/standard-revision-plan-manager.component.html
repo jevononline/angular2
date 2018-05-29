@@ -1,0 +1,66 @@
+<h4>标准列表</h4>
+<ng-container *ngIf="mode==='management'">
+  <button mat-raised-button color="primary" [matMenuTriggerFor]="menu">添加标准</button>
+  <mat-menu #menu="matMenu" [overlapTrigger]="false">
+    <button *ngFor="let item of standardRevisionTypeList" mat-menu-item (click)="openStandardRevisionFormDialog({action:'create',revisionType:item.value,index:-1})">{{item.name}}</button>
+  </mat-menu>
+</ng-container>
+<div class="panel">
+  <div class="panel-body">
+    <mat-table #table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="resourceId">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> 序号 </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.resourceId}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="revisionType">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> 类型 </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.revisionType | standardRevisionType}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="standardNo">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> 标准编号 </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.standard?.standardNo}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> 标准名称 </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.standard?.name}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="standardSystem">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> 标准体系 </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.standardSystem.name}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="department">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> 归口部门 </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.department.name}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="drafter">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> 起草人 </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.drafter.staff.fullName}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="finishTime">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> 完成日期 </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.finishTime | date : 'y-M-d'}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef class="has-text-centered"> 操作 </mat-header-cell>
+        <mat-cell *matCellDef="let row;let i = index;" class="has-text-centered">
+          <button mat-icon-button matTooltip="下载编制说明" [disabled]="!row.preparationNote" [appDownload]="{files:[row.preparationNote]}">
+            <mat-icon>file_download</mat-icon>
+          </button>
+          <button mat-icon-button matTooltip="编辑" *ngIf="mode==='management'" (click)="openStandardRevisionFormDialog({action:'update',revisionType:row.revisionType,index:i,node:row})">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button matTooltip="删除" *ngIf="mode==='management'" (click)="delete(i,row)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  </div>
+</div>

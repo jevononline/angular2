@@ -1,0 +1,72 @@
+<ux-table-container>
+  <mat-table #table [dataSource]="dataSource" matSort [matSortActive]="sortActive" matSortDisableClear matSortDirection="desc">
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> 序号 </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="title">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> 标题 </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <a (click)="openDetailDialog(row.id)">{{row.title}}</a>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="startDate">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> 开始日期 </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.startDate}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="endDate">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> 结束日期 </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.endDate}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> 状态 </mat-header-cell>
+      <mat-cell *matCellDef="let row" class="has-text-left"> {{row.status | announcementStatus}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="createdAt">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> 创建时间 </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.createdAt | dateTime}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="createdBy">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> 创建人 </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.createdBy.staff?.fullName || row.createdBy.loginId}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="publishedAt">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> 发布时间 </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <span *ngIf="row.publishedAt">{{row.publishedAt | dateTime}}</span>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="publishedBy">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> 发布人 </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.publishedBy?.staff?.fullName || row.publishedBy?.loginId}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef class="has-text-centered"> 操作 </mat-header-cell>
+      <mat-cell *matCellDef="let row" class="has-text-centered">
+        <!-- <button mat-icon-button matTooltip="发布" (click)="publishAnnouncement(row)"><mat-icon>publish</mat-icon></button> -->
+        <button mat-icon-button matTooltip="编辑" *ngIf="authService.check('/management/announcements/:form/2/:id')" [disabled]="isEditable(row)" [routerLink]="['update',2,row.id]">
+          <mat-icon>edit</mat-icon>
+        </button>
+
+        <button mat-icon-button matTooltip="删除" *ngIf="authService.check('/management/announcements@delete')" (click)="openDeletionDialog(row)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+  <mat-paginator #paginator [length]="dataSource.total" [pageSize]="appConfig.pageSize" [pageSizeOptions]="appConfig.pageSizeOptions">
+  </mat-paginator>
+</ux-table-container>

@@ -1,0 +1,27 @@
+<div class="panel">
+  <div class="panel-header">
+    <div class="panel-title">文件资产统计</div>
+  </div>
+  <div class="panel-content">
+    <app-standard-asset-chart></app-standard-asset-chart>
+  </div>
+</div>
+<div class="panel">
+  <div class="panel-header">
+    <div class="panel-title">不同标准类型的标准分布</div>
+  </div>
+  <div class="panel-content">
+    <app-dimension-select placeholder="次级维度" name="standardCategoryDimension" [displayedIds]="['standardSystem']" [(ngModel)]="standardCategoryDimension"></app-dimension-select>
+    <app-standard-category-chart [dimemsion]="standardCategoryDimension"></app-standard-category-chart>
+  </div>
+</div>
+
+<div class="panel">
+  <div class="panel-header">
+    <div class="panel-title">不同标准体系的标准分布</div>
+  </div>
+  <div class="panel-content">
+    <app-dimension-select placeholder="次级维度" name="standardSystemDimension" [displayedIds]="['standardCategory']" [(ngModel)]="standardSystemDimension"></app-dimension-select>
+    <app-standard-system-chart [dimemsion]="standardSystemDimension"></app-standard-system-chart>
+  </div>
+</div>

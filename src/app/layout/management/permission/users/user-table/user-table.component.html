@@ -1,0 +1,63 @@
+<ux-table-container>
+  <mat-table #table [dataSource]="dataSource" matSort matSortActive="id" matSortDisableClear matSortDirection="desc">
+
+    <ng-container matColumnDef="selection">
+      <mat-header-cell *matHeaderCellDef>
+        <mat-checkbox (change)="$event ? allToggle() : null" [checked]="isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
+        </mat-checkbox>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row.id) : null" [checked]="selection.isSelected(row.id)">
+        </mat-checkbox>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> 序号 </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="loginId">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> 登录名 </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <span [matTooltip]="displayRoles(row.roles)">{{row.loginId}}</span>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <mat-header-cell *matHeaderCellDef> 账号状态 </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <ux-availability [available]="row.isEnabled"></ux-availability>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="staff">
+      <mat-header-cell *matHeaderCellDef> 关联人员 </mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.staff?.fullName}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="createdAt">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> 创建时间 </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.createdAt | dateTime}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef> 操作 </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <button mat-icon-button matTooltip="编辑" *ngIf="authService.check('/management/permission/users/:form/2/:id')" [routerLink]="['update',2,row.id]">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <!-- <button mat-icon-button matTooltip="删除" (click)="openDeletionDialog(row)"><mat-icon>delete</mat-icon></button> -->
+        <button mat-icon-button matTooltip="重置密码" *ngIf="authService.check('/management/permission/users@reset-password')" (click)="openResetPasswordDialog(row)">
+          <mat-icon>lock</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+  <mat-paginator #paginator [length]="dataSource.total" [pageSize]="appConfig.pageSize" [pageSizeOptions]="appConfig.pageSizeOptions">
+  </mat-paginator>
+</ux-table-container>

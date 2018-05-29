@@ -1,0 +1,49 @@
+<form novalidate autocomplete="off" (ngSubmit)="onSubmit()" #form="ngForm">
+  <mat-dialog-content>
+    <!-- 编辑根目录需要体系结构号 -->
+    <div class="form-group" *ngIf="model?.level!==1">
+      <mat-form-field class="is-full">
+        <input matInput placeholder="体系结构号" name="structureNo" required [disabled]="data.action === 'read'" [(ngModel)]="model.structureNo" validateUnique validateUrl="/api/standard-system/availability/{{model.id}}/structure-no" #structureNo="ngModel">
+        <mat-error *ngIf="structureNo.errors?.required">
+          体系结构号必填
+        </mat-error>
+        <mat-error *ngIf="structureNo.errors?.validateUnique">
+          体系结构号被占用
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="form-group">
+      <mat-form-field class="is-full">
+        <input matInput placeholder="体系名称" name="name" required [disabled]="data.action === 'read'" [(ngModel)]="model.name" #name="ngModel">
+        <mat-error *ngIf="name.errors?.required">
+          体系名称必填
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group" *ngIf="hasStandardCommittee">
+      <app-standard-special-committee-select placeholder="标准委员会组织" name="standardCommittee" required [disabled]="data.action === 'read'" [(ngModel)]="model.standardCommittee"></app-standard-special-committee-select>
+    </div>
+
+    <div class="form-group" *ngIf="model.parent">
+      <mat-form-field class="is-full">
+        <input matInput placeholder="上级体系" [disabled]="true" [value]="model.parent.name">
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field class="is-full">
+        <textarea matInput placeholder="备注" name="remark" maxlength="255" [disabled]="data.action === 'read'" [(ngModel)]="model.remark" #remark="ngModel"></textarea>
+        <mat-error *ngIf="remark.errors?.maxlength">
+          最多255个字符
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button type="submit" mat-raised-button color="primary" [disabled]="form.pristine || form.pending || form.invalid || submitting">提交</button>
+    <button type="button" mat-button mat-dialog-close>取消</button>
+  </mat-dialog-actions>
+
+</form>

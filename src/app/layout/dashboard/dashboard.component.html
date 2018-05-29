@@ -1,0 +1,52 @@
+<div fxLayout="column">
+
+  <app-guideline-latest style="margin:0 -16px;"></app-guideline-latest>
+
+  <div fxLayout="row" fxLayoutGap="16px">
+    <div fxFlex="70">
+      <div class="widget">
+
+        <nav mat-tab-nav-bar>
+          <a mat-tab-link (click)="selectedTabX=0" [active]="selectedTabX===0">标准体系导航</a>
+          <a mat-tab-link (click)="selectedTabX=1" [active]="selectedTabX===1">本岗位标准</a>
+        </nav>
+        <div class="widget-body">
+          <app-system-map *ngIf="selectedTabX===0" [standardSystems]="standardSystems"></app-system-map>
+          <app-system-map-for-post *ngIf="selectedTabX===1" [standardSystems]="standardSystems"></app-system-map-for-post>
+        </div>
+
+      </div>
+      <div class="widget">
+        <mat-tab-group>
+          <mat-tab label="标准常规统计">
+            <app-standard-system-standard-category-chart></app-standard-system-standard-category-chart>
+          </mat-tab>
+          <!-- <mat-tab label="标准高级统计">
+          <h1>Some more tab content</h1>
+          <p>...</p>
+        </mat-tab> -->
+        </mat-tab-group>
+      </div>
+    </div>
+    <div fxFlex="30">
+
+      <app-guideline-widget></app-guideline-widget>
+
+      <app-task-widget *ngIf="authService.check('/process-management/tasks')"></app-task-widget>
+      <app-announcement-widget *ngIf="authService.check('/announcing')"></app-announcement-widget>
+
+      <app-link-widget></app-link-widget>
+
+      <!-- <div class="widget">
+      <div class="widget-header" fxLayout="row" fxLayoutAlign="start center">
+        <div fxFlex fxLayout="row" fxLayoutAlign="start center">
+          <mat-icon>star</mat-icon>我的收藏
+        </div>
+      </div>
+      <div class="widget-body">
+
+      </div>
+    </div> -->
+    </div>
+  </div>
+</div>

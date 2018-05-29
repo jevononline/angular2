@@ -1,0 +1,20 @@
+/* material theme*/
+
+@import '~@angular/material/theming';
+@include mat-core();
+$sidenav-container-background-color: #f3f3f3;
+$custom-primary-color: ( 50: #dbe6f1, 100: #BED2E6, 200: #56a1da, 300: #4296d5, 400: #2e8ad0, 500: #297cbb, 600: #246ea6, 700: #206091, 800: #1b527c, 900: #174567, A100: #95c4e8, A200: #aad0ec, A400: #bfdbf1, A700: #123752, contrast: ( 50: $black-87-opacity, 100: $black-87-opacity, 200: $black-87-opacity, 300: $black-87-opacity, 400: $black-87-opacity, 500: white, 600: white, 700: white, 800: $white-87-opacity, 900: $white-87-opacity, A100: $black-87-opacity, A200: white, A400: white, A700: white));
+$secondary: ( 50: #9ddce0, 100: #8ad5da, 200: #77ced4, 300: #63c6ce, 400: #50bfc8, 500: #3db8c1, 600: #37a6ae, 700: #31939a, 800: #2b8187, 900: #256e73, A100: #b1e3e6, A200: #c4eaec, A400: #d7f1f3, A700: #1e5c60, contrast: ( 50: $black-87-opacity, 100: $black-87-opacity, 200: $black-87-opacity, 300: $black-87-opacity, 400: $black-87-opacity, 500: white, 600: white, 700: white, 800: $white-87-opacity, 900: $white-87-opacity, A100: $black-87-opacity, A200: white, A400: white, A700: white));
+$primary: mat-palette($custom-primary-color);
+$accent: mat-palette($mat-orange);
+$warn: mat-palette($mat-red);
+$theme: mat-light-theme($primary, $accent, $warn);
+@include angular-material-theme($theme);
+
+/* typography */
+
+$font-family: 'Microsoft Yahei';
+$font-size: 12px;
+$font-size-subheading: 14px;
+$custom-typography: mat-typography-config( $font-family: $font-family, $subheading-2: mat-typography-level(12px, 28px, 400), $body-1: mat-typography-level(12px, 20px, 400), $button:mat-typography-level(12px, 14px, 400));
+@include angular-material-typography($custom-typography);

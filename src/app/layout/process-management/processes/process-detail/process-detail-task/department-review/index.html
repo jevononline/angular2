@@ -1,0 +1,25 @@
+<div fxFlex fxLayout="column">
+	<div class="task-info" fxLayout="row" fxLayoutAlign="start start">
+		<!-- <div class="title">审核部门：{{task.name}}</div> -->
+		<div class="title">审核人：{{task.createdBy.staff.fullName}}</div>
+		<div class="title">审核时间：{{task.createdAt | date: 'yyyy-MM-dd HH:mm:ss'}}</div>
+	</div>
+	<div class="title">审查意见表</div>
+	<ux-table-container>
+		<mat-table #table [dataSource]="dataSource">
+			<ng-container matColumnDef="content">
+			  <mat-header-cell *matHeaderCellDef> 意见内容 </mat-header-cell>
+			  <mat-cell *matCellDef="let row"> {{row.content}} </mat-cell>
+			</ng-container>
+
+			<ng-container matColumnDef="reason">
+			  <mat-header-cell *matHeaderCellDef> 处理意见及理由 </mat-header-cell>
+			  <mat-cell *matCellDef="let row"> {{row.reason}} </mat-cell>
+			</ng-container>
+
+			<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+			<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+		</mat-table>
+	</ux-table-container>
+</div>

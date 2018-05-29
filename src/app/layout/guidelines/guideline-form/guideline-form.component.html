@@ -1,0 +1,31 @@
+<div class="panel">
+  <div class="panel-content">
+    <form novalidate autocomplete="off" (ngSubmit)="onSubmit()" #form="ngForm">
+      <div class="form-group">
+        <mat-form-field class="is-one-quarter">
+          <input matInput placeholder="标题" name="title" [disabled]="action==='read'" required [(ngModel)]="model.title" #title="ngModel">
+          <mat-error *ngIf="title.errors?.required">
+            标题必填
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="form-group">
+        <app-guideline-category-select placeholder="类型" name="category" [disabled]="action==='read'" required [(ngModel)]="model.category" #category="ngModel"></app-guideline-category-select>
+        <app-time-span-select *ngIf="model.category?.timeSpanLevel>0" name="timeSpan" [disabled]="action==='read'" required [timeSpanLevel]="model.category.timeSpanLevel" [(ngModel)]="model.timeSpan" #timeSpan="ngModel" validateTimeSpan></app-time-span-select>
+      </div>
+
+      <div class="form-group is-full">
+        <mat-form-field class="is-half">
+          <textarea matInput placeholder="内容" name="content" matTextareaAutosize matAutosizeMinRows="5" [disabled]="action==='read'" required [(ngModel)]="model.content" #content="ngModel"></textarea>
+          <mat-error *ngIf="content.errors?.required">
+            内容必填
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="form-actions" fxLayout="row">
+        <button type="submit" mat-raised-button color="primary" [disabled]="form.pristine || form.invalid || submitting">提交</button>
+        <a mat-button [routerLink]="['../../../']">取消</a>
+      </div>
+    </form>
+  </div>
+</div>

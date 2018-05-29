@@ -1,0 +1,22 @@
+<mat-form-field>
+  <mat-select [placeholder]="placeholder" name="item" class="is-full" [multiple]="multiple" [disabled]="disabled" [compareWith]="compareWith" [(ngModel)]="myModel" [required]="required" (selectionChange)="onChange()" (closed)="onClose()">
+    <!-- <div class="select-filter-bar">
+      <mat-form-field class="is-full" floatPlaceholder="never">
+        <mat-icon matPrefix>search</mat-icon>
+        <input matInput #keyword placeholder="搜索" (keyup)="filterList(keyword.value)">
+      </mat-form-field>
+    </div> -->
+    <ng-container *ngIf="displayMultipleToolBar">
+      <div class="select-multiple-tool-bar" fxLayout="row" fxLayoutAlign="end center">
+        <a (click)="selectAll()">全选</a>
+        <a (click)="clear()">清空</a>
+      </div>
+    </ng-container>
+
+    <mat-optgroup *ngFor="let standardSystem of list" [label]="standardSystem.name">
+      <mat-option *ngFor="let standard of standardSystem.standards" [disabled]="isDisabledOption(standard)" [value]="standard">
+        {{ standard.name }}
+      </mat-option>
+    </mat-optgroup>
+  </mat-select>
+</mat-form-field>

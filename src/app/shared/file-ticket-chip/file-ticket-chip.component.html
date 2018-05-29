@@ -1,0 +1,8 @@
+<div class="file-ticket-chip" fxLayout="row" fxLayoutAlign="start center" *ngIf="fileTicket">
+  <ng-container [ngSwitch]="ext">
+    <ng-container *ngFor="let icon of icons">
+      <mat-icon [svgIcon]="icon.iconName" *ngSwitchCase="icon.ext"></mat-icon>
+    </ng-container>
+  </ng-container>
+  <span matTooltip="此类型文件不支持在线查看，请下载查看" [matTooltipDisabled]="ext==='pdf'" (click)="viewFile()">{{fileTicket?.filename}}</span>
+</div>

@@ -1,0 +1,9 @@
+<tree-root class="privilege-tree" #tree [nodes]="nodes">
+  <ng-template #treeNodeTemplate let-node="node" let-index="index">
+
+    <mat-checkbox color="primary" (change)="change(node, !node.data.checked)" [indeterminate]="node.data.indeterminate" [checked]="node.data.checked">
+      {{ node.data.name }}
+    </mat-checkbox>
+
+  </ng-template>
+</tree-root>

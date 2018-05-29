@@ -1,0 +1,78 @@
+<form novalidate autocomplete="off" (ngSubmit)="onSubmit()" #form="ngForm">
+  <mat-dialog-content>
+    <div class="form-group">
+      <mat-form-field class="is-full">
+        <input matInput placeholder="工号" name="staffNo" [disabled]="data.action === 'read'" pattern="[A-Za-z0-9]+" required validateUnique validateUrl="/api/staff/availability/{{model.id}}/staff-no" [(ngModel)]="model.staffNo" #staffNo="ngModel">
+        <mat-error *ngIf="staffNo.errors?.required">
+          工号必填
+        </mat-error>
+        <mat-error *ngIf="staffNo.errors?.pattern">
+          工号格式错误，字母数字组合
+        </mat-error>
+        <mat-error *ngIf="staffNo.errors?.validateUnique">
+          工号已存在
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field class="is-full">
+        <input matInput placeholder="姓名" name="fullName" [disabled]="data.action === 'read'" required [(ngModel)]="model.fullName" #fullName="ngModel">
+        <mat-error *ngIf="fullName.errors?.required">
+          姓名必填
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <app-staff-status-select placeholder="状态" name="status" [disabled]="data.action === 'read'" required [(ngModel)]="model.status"></app-staff-status-select>
+    </div>
+
+    <div class="form-group">
+      <app-department-select placeholder="所属部门" name="departments" [multiple]="true" [disabled]="data.action === 'read'" required [(ngModel)]="departments"></app-department-select>
+      <app-post-select placeholder="所属岗位" name="post" [multiple]="true" [disabled]="data.action === 'read'" required [departments]="departments" [(ngModel)]="model.posts"></app-post-select>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field class="is-full">
+        <input matInput placeholder="邮箱" name="email" [disabled]="data.action === 'read'" validateEmail validateUnique validateUrl="/api/staff/availability/{{model.id}}/email" [(ngModel)]="model.email" #email="ngModel">
+        <mat-error *ngIf="email.errors?.validateEmail">
+          邮箱格式错误
+        </mat-error>
+        <mat-error *ngIf="email.errors?.validateUnique">
+          邮箱已被占用
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field class="is-full">
+        <input matInput placeholder="手机" name="mobile" [disabled]="data.action === 'read'" validateMobile validateUnique validateUrl="/api/staff/availability/{{model.id}}/mobile" [(ngModel)]="model.mobile" #mobile="ngModel">
+
+        <mat-error *ngIf="mobile.errors?.required">
+          手机必填
+        </mat-error>
+        <mat-error *ngIf="mobile.errors?.validateMobile">
+          手机格式错误
+        </mat-error>
+        <mat-error *ngIf="mobile.errors?.validateUnique">
+          手机已被占用
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field class="is-full">
+        <textarea matInput placeholder="备注" name="remark" [disabled]="data.action === 'read'" maxlength="255" [(ngModel)]="model.remark" #remark="ngModel"></textarea>
+        <mat-error *ngIf="remark.error?.maxlength">
+          最多255个字符
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button type="submit" mat-raised-button color="primary" [disabled]="form.pristine || form.pending || form.invalid || submitting">提交</button>
+    <button type="button" mat-button mat-dialog-close>取消</button>
+  </mat-dialog-actions>
+</form>

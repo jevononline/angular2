@@ -1,0 +1,24 @@
+:host {
+  display: inline-block;
+}
+
+.user-profile-panel {
+  width: 180px;
+}
+
+.user-profile {
+  padding: 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, .12);
+  >mat-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 36px;
+  }
+  p {
+    transform-origin: 0 0;
+    transform: scale(0.75);
+    margin: 0;
+    color: #666;
+    font-size: 12px;
+  }
+}

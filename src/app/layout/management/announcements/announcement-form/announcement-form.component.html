@@ -1,0 +1,43 @@
+<div class="panel">
+  <div class="panel-content">
+    <form novalidate autocomplete="off" (ngSubmit)="onSubmit()" #form="ngForm">
+
+      <div class="form-group">
+        <mat-form-field class="is-half">
+          <input matInput placeholder="公告标题" name="title" required [(ngModel)]="model.title" #title="ngModel">
+          <mat-error *ngIf="title.errors?.required">
+            公告标题必填
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="form-group">
+        <mat-form-field>
+          <input matInput [matDatepicker]="startDatePicker" placeholder="开始日期" name="startDate" required [max]="endDate.value" [(ngModel)]="model.startDate" #startDate="ngModel">
+          <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #startDatePicker></mat-datepicker>
+          <mat-error *ngIf="startDate.errors?.required">
+            开始日期必填
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput [matDatepicker]="endDatePicker" placeholder="结束日期" name="endDate" required [min]="startDate.value" [(ngModel)]="model.endDate" #endDate="ngModel">
+          <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #endDatePicker></mat-datepicker>
+          <mat-error *ngIf="endDate.errors?.required">
+            结束日期必填
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-group is-full">
+        <quill-editor placeholder="公告内容" name="content" required bounds="quill-editor" [(ngModel)]="model.content" #content="ngModel"></quill-editor>
+      </div>
+      <div class="form-actions" fxLayout="row">
+        <button type="submit" mat-raised-button color="primary" [disabled]="form.pristine || form.invalid || submitting">保存</button>
+        <button type="button" mat-raised-button color="primary" [disabled]="form.pristine || form.invalid || submitting" (click)="openPublishDialog()">保存并发布</button>
+        <a mat-button [routerLink]="['/management/announcements']">取消</a>
+      </div>
+    </form>
+  </div>
+</div>

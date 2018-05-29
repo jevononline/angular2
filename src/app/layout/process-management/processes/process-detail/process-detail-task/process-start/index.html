@@ -1,0 +1,39 @@
+<div fxFlex fxLayout="column">
+	<div class="task-info" fxLayout="row" fxLayoutAlign="start start">
+		<div class="title">计划名称：{{task.name}}</div>
+		<div class="title">创建人：{{task.createdBy.staff.fullName}}</div>
+		<div class="title">创建时间：{{task.createdAt | date: 'yyyy-MM-dd HH:mm:ss'}}</div>
+	</div>
+	<ux-table-container>
+		<mat-table #table [dataSource]="dataSource">
+			<ng-container matColumnDef="departmentReviewTime">
+			  <mat-header-cell *matHeaderCellDef> 部门审核日期 </mat-header-cell>
+			  <mat-cell *matCellDef="let row"> {{row.departmentReviewTime | date: 'yyyy-MM-dd'}} </mat-cell>
+			</ng-container>
+
+			<ng-container matColumnDef="expertCommitteeReviewTime">
+			  <mat-header-cell *matHeaderCellDef> 专委会审核日期 </mat-header-cell>
+			  <mat-cell *matCellDef="let row"> {{row.expertCommitteeReviewTime | date:'yyyy-MM-dd' }} </mat-cell>
+			</ng-container>
+
+			<ng-container matColumnDef="standardCommitteeReviewTime">
+			  <mat-header-cell *matHeaderCellDef> 标委会审核日期 </mat-header-cell>
+			  <mat-cell *matCellDef="let row"> {{row.standardCommitteeReviewTime | date:'yyyy-MM-dd' }} </mat-cell>
+			</ng-container>
+
+			<ng-container matColumnDef="coordinationDepartmentReviewDuration">
+			  <mat-header-cell *matHeaderCellDef> 协管部门数量 </mat-header-cell>
+			  <mat-cell *matCellDef="let row"> {{row.coordinationDepartmentReviewDuration}} </mat-cell>
+			</ng-container>
+
+			<ng-container matColumnDef="draftReviewDuration">
+			  <mat-header-cell *matHeaderCellDef> 征求意见天数 </mat-header-cell>
+			  <mat-cell *matCellDef="let row"> {{row.draftReviewDuration}} </mat-cell>
+			</ng-container>
+
+			<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+			<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+		</mat-table>
+	</ux-table-container>
+</div>

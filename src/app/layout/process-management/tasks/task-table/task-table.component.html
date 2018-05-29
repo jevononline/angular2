@@ -1,0 +1,40 @@
+<ux-table-container>
+  <mat-table #table [dataSource]="dataSource" matSort matSortActive="createTime" matSortDisableClear matSortDirection="desc">
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef> 序号 </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> 名称 </mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.name }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="businessInstance">
+      <mat-header-cell *matHeaderCellDef> 计划 </mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.businessInstance?.name}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="createTime">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> 创建时间 </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.createTime | dateTime}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef class="has-text-centered"> 操作 </mat-header-cell>
+      <mat-cell *matCellDef="let row" class="has-text-centered">
+        <button mat-icon-button matTooltip="处理任务" (click)="gotoTask(row)">
+          <mat-icon>work</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="查看流程进度" (click)="openProcessDiagramDialog(row)">
+          <mat-icon>device_hub</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+  <mat-paginator #paginator [length]="dataSource.total" [pageSize]="appConfig.pageSize" [pageSizeOptions]="appConfig.pageSizeOptions">
+  </mat-paginator>
+</ux-table-container>

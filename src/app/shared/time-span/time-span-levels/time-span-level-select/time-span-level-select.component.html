@@ -1,0 +1,7 @@
+<mat-form-field [floatPlaceholder]="floatPlaceholder">
+  <mat-select [placeholder]="placeholder" name="timeSpanLevel" [multiple]="multiple" [required]="required" [disabled]="disabled" [(ngModel)]="myModel" (selectionChange)="onChange()" (opened)="onOpen()" (closed)="onClose()">
+    <mat-option *ngFor="let item of list" [value]="item.value">
+      {{item.name}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>

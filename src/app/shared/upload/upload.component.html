@@ -1,0 +1,23 @@
+<div class="upload-container" fxLayout="row">
+  <div class="upload-trigger-container">
+    <ng-content></ng-content>
+    <input type="file" class="trigger" ng2FileSelect [uploader]="uploader" [disabled]="disabled" [multiple]="multiple" />
+  </div>
+  <div class="uploaded-file-list-container">
+    <div class="multiple" *ngIf="multiple">
+      <ul *ngIf="myModel?.length">
+        <li *ngFor="let item of myModel" fxLayout="row" fxLayoutAlign="start center">
+
+          <app-file-ticket-chip [fileTicket]="item"></app-file-ticket-chip>
+          <button type="button" mat-icon-button [disabled]="disabled" (click)="remove(index)">
+            <mat-icon>remove_circle_outline</mat-icon>
+          </button>
+        </li>
+      </ul>
+    </div>
+    <div class="single" *ngIf="!multiple">
+
+      <app-file-ticket-chip [fileTicket]="myModel" (view)="onView()"></app-file-ticket-chip>
+    </div>
+  </div>
+</div>

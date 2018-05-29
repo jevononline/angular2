@@ -1,0 +1,13 @@
+<ol>
+  <li *ngFor="let item of list">
+    <div fxLayout="row">
+      <div fxFlex>
+        <a (click)="gotoTask(item)">
+          <span>{{item.name}}</span>
+          <span>[{{item.businessInstance?.name}}]</span>
+        </a>
+      </div>
+
+    </div>
+  </li>
+</ol>

@@ -1,0 +1,12 @@
+<div fxLayout="row" fxLayoutAlign="start center" class="time-span-toggle">
+  <mat-button-toggle-group #timeSpanToggleGroup="matButtonToggleGroup" (change)="onChange()">
+    <mat-button-toggle [value]="0">
+      总计
+    </mat-button-toggle>
+    <mat-button-toggle [value]="1">
+      时间范围
+    </mat-button-toggle>
+  </mat-button-toggle-group>
+
+  <app-time-span-select *ngIf="timeSpanToggleGroup.value===1" name="timeSpan" floatPlaceholder="never" [timeSpanLevel]="timeSpanLevel" [(ngModel)]="timeSpan" (change)="onChange()"></app-time-span-select>
+</div>

@@ -1,0 +1,24 @@
+<div class="treeview-container">
+  <mat-form-field class="is-full" floatPlaceholder="never">
+    <mat-icon matPrefix>search</mat-icon>
+    <input matInput #filter (keyup)="tree.treeModel.filterNodes(filter.value)" (click)="$event.stopPropagation()" placeholder="搜索">
+  </mat-form-field>
+  <tree-root #tree [nodes]="nodes" [options]="options" (initialized)="onInitialized()" (activate)="onActivate($event)">
+    <ng-template #treeNodeTemplate let-node let-index="index">
+
+      <span *ngIf="!authService.check('/standard-system-org-management@standard-network@treeview'); else hasMenu">
+        {{ node.data.name }}
+        <small>({{node.data.staffCount}})</small>
+      </span>
+      <ng-template #hasMenu>
+        <span (contextmenu)="$event.preventDefault();trigger.openMenu()">
+          <span #trigger="matMenuTrigger" [matMenuTriggerFor]="menu"></span> {{ node.data.name }}
+          <small>({{node.data.staffCount}})</small>
+        </span>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item *ngIf="authService.check('/standard-system-org-management@standard-network@leader')" (click)="openLeaderDialog(node.data)"> 设置负责人 </button>
+        </mat-menu>
+      </ng-template>
+    </ng-template>
+  </tree-root>
+</div>

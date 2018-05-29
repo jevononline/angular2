@@ -1,0 +1,27 @@
+.top-fixed-bar {
+  position: fixed;
+  top: 0;
+}
+
+#login-container {
+  background: url(/assets/imgs/bg_login.jpg) repeat;
+  #login {
+    background: #fff;
+  }
+  .logo {
+    margin: 16px 0;
+    text-align: center;
+    img{
+      margin-right: 20px;
+    }
+    .chinese-title{
+      font-size: 24px;
+    }
+    .english-title{
+      font-size: 15px;
+    }
+  }
+  #login-form {
+    padding: 0 128px 48px 128px;
+  }
+}

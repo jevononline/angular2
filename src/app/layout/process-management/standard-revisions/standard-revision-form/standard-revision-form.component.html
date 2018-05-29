@@ -1,0 +1,55 @@
+<form novalidate autocomplete="off" (ngSubmit)="onSubmit()" #form="ngForm">
+  <mat-dialog-content>
+
+    <div class="form-group">
+      <app-standard-system-select placeholder="所属体系" name="standardSystem" [ofSpecialStandardCommittee]="true" required [(ngModel)]="model.standardSystem"></app-standard-system-select>
+    </div>
+
+    <div class="form-group" *ngIf="model.revisionType===StandardRevisionTypes.New.value">
+      <mat-form-field class="is-full">
+        <input matInput placeholder="标准名称" name="name" required [(ngModel)]="model.standard.name" #name="ngModel">
+        <mat-error *ngIf="name.errors?.required">
+          标准名称必填
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group" *ngIf="model.revisionType===StandardRevisionTypes.Revise.value || model.revisionType===StandardRevisionTypes.Obsolete.value">
+      <app-standard-select placeholder="标准" name="standard" required [standardSystems]="[model.standardSystem]" [isDisabledOption]="isDisabledStandardOption" [(ngModel)]="model.standard" (change)="onStandardChange()"></app-standard-select>
+    </div>
+
+    <div class="form-group">
+      <app-department-select placeholder="归口部门" name="department" required [disabled]="model.revisionType===StandardRevisionTypes.Obsolete.value" [(ngModel)]="model.department"></app-department-select>
+    </div>
+
+    <div class="form-group">
+      <app-user-select placeholder="起草人" name="user" required of="standard-network" level="descendant" [isDisabledOption]="isDisabledUserOption" [disabled]="model.revisionType===StandardRevisionTypes.Obsolete.value" [(ngModel)]="model.drafter"></app-user-select>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field>
+        <input matInput [matDatepicker]="finishTimePicker" placeholder="完成日期" name="finishTime" required [(ngModel)]="model.finishTime" #finishTime="ngModel">
+        <mat-datepicker-toggle matSuffix [for]="finishTimePicker"></mat-datepicker-toggle>
+        <mat-datepicker #finishTimePicker></mat-datepicker>
+        <mat-error *ngIf="finishTime.errors?.required">
+          完成日期必填
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <label>编制说明</label>
+      <app-upload name="upload" [(ngModel)]="model.preparationNote">
+        <button type="button" mat-icon-button>
+          <mat-icon>file_upload</mat-icon>
+        </button>
+      </app-upload>
+    </div>
+
+  </mat-dialog-content>
+  <mat-dialog-actions>
+
+    <button type="submit" mat-raised-button color="primary" [disabled]="form.pristine || form.invalid || submitting">确定</button>
+    <button type="button" mat-button mat-dialog-close>取消</button>
+  </mat-dialog-actions>
+</form>

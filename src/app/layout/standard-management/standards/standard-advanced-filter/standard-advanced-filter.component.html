@@ -1,0 +1,48 @@
+<button mat-icon-button [matMenuTriggerFor]="menu" #trigger="matMenuTrigger">
+  <mat-icon [ngClass]="{'standard-advanced-filter-is-set':isSet}">filter_list</mat-icon>
+</button>
+<mat-menu #menu="matMenu" class="standard-advanced-filter-menu" xPosition="before">
+  <div class="content" (click)="$event.stopPropagation()">
+    <form novalidate autocomplete="off" (ngSubmit)="onSubmit()" #form="ngForm">
+      <div class="form-group">
+        <app-department-select placeholder="归口部门" name="departments" [multiple]="true" [(ngModel)]="model.departments"></app-department-select>
+      </div>
+      <div class="form-group">
+        <label>发布日期</label>
+        <mat-form-field floatPlaceholder="never">
+          <input matInput [matDatepicker]="publishStartDatePicker" placeholder="开始日期" name="publishStartDate" [max]="publishEndDate.value" [(ngModel)]="model.publishStartDate" #publishStartDate="ngModel">
+          <mat-datepicker-toggle matSuffix [for]="publishStartDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #publishStartDatePicker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field floatPlaceholder="never">
+          <input matInput [matDatepicker]="publishEndDatePicker" placeholder="结束日期" name="publishEndDate" [min]="publishStartDate.value" [(ngModel)]="model.publishEndDate" #publishEndDate="ngModel">
+          <mat-datepicker-toggle matSuffix [for]="publishEndDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #publishEndDatePicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <div class="form-group">
+        <label>实施日期</label>
+        <mat-form-field floatPlaceholder="never">
+          <input matInput [matDatepicker]="executeStartDatePicker" placeholder="开始日期" name="executeStartDate" [max]="executeEndDate.value" [(ngModel)]="model.executeStartDate" #executeStartDate="ngModel">
+          <mat-datepicker-toggle matSuffix [for]="executeStartDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #executeStartDatePicker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field floatPlaceholder="never">
+          <input matInput [matDatepicker]="executeEndDatePicker" placeholder="结束日期" name="executeEndDate" [min]="executeStartDate.value" [(ngModel)]="model.executeEndDate" #executeEndDate="ngModel">
+          <mat-datepicker-toggle matSuffix [for]="executeEndDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #executeEndDatePicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="form-group">
+        <app-standard-category-select name="categoryValues" placeholder="类型" multiple [(ngModel)]="model.categoryValues"></app-standard-category-select>
+      </div>
+      <div class="form-actions" fxLayout="row">
+        <button type="submit" mat-raised-button color="primary" [disabled]="form.pristine || form.invalid">确定</button>
+        <button type="button" mat-button (click)="trigger.closeMenu()">取消</button>
+      </div>
+    </form>
+  </div>
+</mat-menu>

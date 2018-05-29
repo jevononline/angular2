@@ -1,0 +1,136 @@
+<form novalidate autocomplete="off" #form="ngForm">
+
+  <h4>标准信息</h4>
+  <div class="form-group">
+    <mat-form-field>
+      <input matInput placeholder="任务类型" name="revisionType" disabled [value]="model.revisionType|standardRevisionType">
+    </mat-form-field>
+  </div>
+
+  <div class="form-group">
+    <app-standard-system-select placeholder="所属体系" name="standardSystem" disabled required [(ngModel)]="model.standardSystem"></app-standard-system-select>
+    <app-department-select placeholder="归口部门" name="department" required disabled [(ngModel)]="model.department"></app-department-select>
+    <app-user-select placeholder="起草人" name="user" required of="standard-network" level="descendant" disabled [(ngModel)]="model.drafter"></app-user-select>
+  </div>
+
+  <div class="form-group">
+    <mat-form-field>
+      <input matInput placeholder="标准名称" name="name" required [disabled]="mode==='view'" [(ngModel)]="model.standard.name" #name="ngModel">
+      <mat-error *ngIf="name.errors?.required">
+        标准名称必填
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field *ngIf="isReady">
+      <input matInput placeholder="标准编号" name="standardNo" [required]="!!flag" [disabled]="mode==='view'&&flag===0" validateDocumentNo validateUnique validateUrl="/api/standards/availability/{{model.standard.id||0}}/{{model.resourceId}}/standard-no" [(ngModel)]="model.standard.standardNo" #standardNo="ngModel">
+      <mat-error *ngIf="standardNo.errors?.required">
+        标准编号必填
+      </mat-error>
+      <mat-error *ngIf="standardNo.errors?.validateDocumentNo">
+        标准编号格式错误
+      </mat-error>
+      <mat-error *ngIf="standardNo.errors?.validateUnique">
+        标准编号被占用
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="form-group">
+    <mat-form-field>
+      <input matInput [matDatepicker]="startDatePicker" placeholder="发布日期" name="publishDate" required [disabled]="mode==='view'" [max]="executeDate.value" [(ngModel)]="model.publishDate" #publishDate="ngModel">
+      <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #startDatePicker></mat-datepicker>
+      <mat-error *ngIf="publishDate.errors?.required">
+        发布日期必填
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput [matDatepicker]="endDatePicker" placeholder="实施日期" name="executeDate" required [min]="publishDate.value" [disabled]="mode==='view'" [(ngModel)]="model.executeDate" #executeDate="ngModel">
+      <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #endDatePicker></mat-datepicker>
+      <mat-error *ngIf="executeDate.errors?.required">
+        实施日期必填
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div fxLayout="row">
+    <div class="form-group" fxFlex="24%">
+      <label class="required">标准草案</label>
+      <app-upload name="mainFile" required [disabled]="mode==='view'" [(ngModel)]="model.mainFile" #mainFile="ngModel">
+        <button type="button" mat-icon-button [disabled]="mode==='view'">
+          <mat-icon>file_upload</mat-icon>
+        </button>
+      </app-upload>
+      <button type="button" mat-icon-button matTooltip="下载标准草案" *ngIf="model.mainFile" [appDownload]="{files:[model.mainFile]}">
+        <mat-icon>file_download</mat-icon>
+      </button>
+    </div>
+
+    <div class="form-group" fxFlex="24%">
+      <label>流程图</label>
+      <app-upload name="flowChartFiles" [multiple]="true" [disabled]="mode==='view'" [(ngModel)]="model.flowChartFiles" #flowChartFiles="ngModel">
+        <button type="button" mat-icon-button [disabled]="mode==='view'">
+          <mat-icon>file_upload</mat-icon>
+        </button>
+      </app-upload>
+      <button type="button" mat-icon-button matTooltip="下载流程图" *ngIf="model.flowChartFiles&&model.flowChartFiles.length>0" [appDownload]="{files:model.flowChartFiles}">
+        <mat-icon>file_download</mat-icon>
+      </button>
+    </div>
+
+    <div class="form-group" fxFlex="24%">
+      <label>报告与记录</label>
+      <app-upload name="reportFiles" [multiple]="true" [disabled]="mode==='view'" [(ngModel)]="model.reportFiles" #reportFiles="ngModel">
+        <button type="button" mat-icon-button [disabled]="mode==='view'">
+          <mat-icon>file_upload</mat-icon>
+        </button>
+      </app-upload>
+      <button type="button" mat-icon-button matTooltip="下载报告与记录" *ngIf="model.reportFiles&&model.reportFiles.length>0" [appDownload]="{files:model.reportFiles}">
+        <mat-icon>file_download</mat-icon>
+      </button>
+    </div>
+
+    <div class="form-group" fxFlex="24%">
+      <label>编制说明</label>
+      <app-upload name="upload" [disabled]="mode==='view'" [(ngModel)]="model.preparationNote">
+        <button type="button" mat-icon-button [disabled]="mode==='view'">
+          <mat-icon>file_upload</mat-icon>
+        </button>
+      </app-upload>
+      <button type="button" mat-icon-button matTooltip="下载编制说明" *ngIf="model.preparationNote" [appDownload]="{files:[model.preparationNote]}">
+        <mat-icon>file_download</mat-icon>
+      </button>
+    </div>
+
+  </div>
+  <div class="form-group">
+    <app-department-select placeholder="协管部门" name="assistingDepartments" [multiple]="true" required [disabled]="mode==='view'" [(ngModel)]="model.assistingDepartments"></app-department-select>
+    <app-department-select placeholder="征求意见部门" name="solicitedDepartments" [multiple]="true" [required]="!!flag" [disabled]="mode==='view'&&flag===0" [(ngModel)]="model.solicitedDepartments"></app-department-select>
+  </div>
+
+  <div class="form-group">
+    <mat-form-field>
+      <input matInput [matDatepicker]="finishTimePicker" placeholder="完成日期" name="finishTime" required [disabled]="mode==='view'" [(ngModel)]="model.finishTime" #finishTime="ngModel">
+      <mat-datepicker-toggle matSuffix [for]="finishTimePicker"></mat-datepicker-toggle>
+      <mat-datepicker #finishTimePicker></mat-datepicker>
+      <mat-error *ngIf="finishTime.errors?.required">
+        完成日期必填
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="form-group">
+    <mat-form-field class="is-one-third">
+      <textarea matInput placeholder="风险点" name="riskPoint" [disabled]="mode==='view'" [(ngModel)]="model.riskPoint" #riskPoint="ngModel"></textarea>
+    </mat-form-field>
+  </div>
+
+
+
+  <h4>规范性引用文件列表</h4>
+  <button type="button" *ngIf="mode==='management'" mat-raised-button color="primary" (click)="openReferenceStandardDialog()">
+    添加规范性引用文件
+  </button>
+  <app-standard-table-manager [mode]="mode" [ids]="model.referenceStandardIds" (remove)="onRemoveReferenceStandard($event)"></app-standard-table-manager>
+
+</form>

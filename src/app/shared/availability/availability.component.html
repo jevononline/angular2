@@ -1,0 +1,8 @@
+<div *ngIf="available;then enabled else disabled">
+</div>
+<ng-template #enabled>
+  <div *ngIf="available" matTooltip="启用" class="circle enabled"></div>
+</ng-template>
+<ng-template #disabled>
+  <div *ngIf="!available" matTooltip="禁用" class="circle disabled"></div>
+</ng-template>

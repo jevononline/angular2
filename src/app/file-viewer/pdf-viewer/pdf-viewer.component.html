@@ -1,0 +1,25 @@
+<div id="container">
+  <div id="state" *ngIf="state>0">
+    <span *ngIf="state==1">文档加载中...</span>
+    <span *ngIf="state==2">文档渲染中...</span>
+  </div>
+
+  <div id="toolbar-container" #toolbarContainer fxLayout="row" fxLayoutAlign="space-around center">
+    <div id="pagination-control-container">
+      <button mat-icon-button (click)="prevPage()" [disabled]="currentPage<=1">
+        <mat-icon>navigate_before</mat-icon>
+      </button>
+
+      <input type="number" class="page-input" #pageInput (keyup.enter)="jumpToPage(pageInput.value)" [value]="currentPage" [min]="1" [max]="numPages">
+      <span>{{numPages}}</span>
+
+      <button mat-icon-button (click)="nextPage()" [disabled]="currentPage>=numPages">
+        <mat-icon>navigate_next</mat-icon>
+      </button>
+    </div>
+  </div>
+  <div id="viewport-container" #viewportContainer>
+
+  </div>
+
+</div>

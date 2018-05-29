@@ -1,0 +1,35 @@
+<app-standard-revision-plan-opinion-manager #opinionManager [task]="task" [management]="2" [level]="2"></app-standard-revision-plan-opinion-manager>
+<app-standard-revision-plan-manager #standardRevisionPlanManager [task]="task"></app-standard-revision-plan-manager>
+<form novalidate autocomplete="off" (ngSubmit)="goOn()" #form="ngForm">
+  <h4>设置节点截止日期</h4>
+  <div class="form-group">
+    <!-- <mat-form-field>
+      <input matInput [matDatepicker]="departmentReviewTimePicker" placeholder="部门审核日期" name="departmentReviewTime" required [(ngModel)]="model.departmentReviewTime" #departmentReviewTime="ngModel">
+      <mat-datepicker-toggle matSuffix [for]="departmentReviewTimePicker"></mat-datepicker-toggle>
+      <mat-datepicker #departmentReviewTimePicker></mat-datepicker>
+      <mat-error *ngIf="departmentReviewTime.errors?.required">
+        部门审核日期必填
+      </mat-error>
+    </mat-form-field> -->
+    <mat-form-field>
+      <input matInput [matDatepicker]="expertCommitteeReviewTimePicker" placeholder="专委会审核日期" name="expertCommitteeReviewTime" required [min]="model.departmentReviewTime" [(ngModel)]="model.expertCommitteeReviewTime" #expertCommitteeReviewTime="ngModel">
+      <mat-datepicker-toggle matSuffix [for]="expertCommitteeReviewTimePicker"></mat-datepicker-toggle>
+      <mat-datepicker #expertCommitteeReviewTimePicker></mat-datepicker>
+      <mat-error *ngIf="expertCommitteeReviewTime.errors?.required">
+        专委会审核日期必填
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [matDatepicker]="standardCommitteeReviewTimePicker" placeholder="标委会审核日期" name="standardCommitteeReviewTime" required [min]="model.expertCommitteeReviewTime" [(ngModel)]="model.standardCommitteeReviewTime" #standardCommitteeReviewTime="ngModel">
+      <mat-datepicker-toggle matSuffix [for]="standardCommitteeReviewTimePicker"></mat-datepicker-toggle>
+      <mat-datepicker #standardCommitteeReviewTimePicker></mat-datepicker>
+      <mat-error *ngIf="standardCommitteeReviewTime.errors?.required">
+        标委会审核日期必填
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div class="form-actions" fxLayout="row">
+    <button type="submit" mat-raised-button color="primary" [disabled]="!isReady || form.invalid || submitting">保存并发送下一环节</button>
+    <button type="button" mat-button [routerLink]="['/process-management/tasks']">取消</button>
+  </div>
+</form>

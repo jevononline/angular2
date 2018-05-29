@@ -1,0 +1,52 @@
+<div class="bar">
+  <app-time-span-toggle (change)="onTimeSpanToggle($event)"></app-time-span-toggle>
+</div>
+
+<div class="panel-wrapper" fxLayout="row" fxLayoutGap="16px">
+  <div class="panel" fxFlex="50%">
+    <div class="panel-header">
+      <div class="panel-title">标准使用排行榜</div>
+    </div>
+    <div class="panel-content">
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <app-metric-select placeholder="指标" name="standardUsageStandardMetric" [displayedIds]="standardUsageMetricDisplayedIds" [(ngModel)]="standardUsageStandardMetric"></app-metric-select>
+      </div>
+      <app-standard-usage-rank-chart [mainDimension]="standardUsageStandardMainDimension" [timeSpan]="timeSpan" [metric]="standardUsageStandardMetric"></app-standard-usage-rank-chart>
+    </div>
+  </div>
+  <div class="panel" fxFlex="50%">
+    <div class="panel-header">
+      <div class="panel-title">标准使用达人排行榜</div>
+    </div>
+    <div class="panel-content">
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <app-metric-select placeholder="指标" name="standardUsageStaffMetric" [displayedIds]="standardUsageMetricDisplayedIds" [(ngModel)]="standardUsageStaffMetric"></app-metric-select>
+      </div>
+      <app-standard-usage-rank-chart [mainDimension]="standardUsageStaffMainDimension" [timeSpan]="timeSpan" [metric]="standardUsageStaffMetric"></app-standard-usage-rank-chart>
+    </div>
+  </div>
+</div>
+<div class="panel-wrapper" fxLayout="row" fxLayoutGap="16px">
+  <div class="panel" fxFlex="50%">
+    <div class="panel-header">
+      <div class="panel-title">标准使用岗位排行榜</div>
+    </div>
+    <div class="panel-content">
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <app-metric-select placeholder="指标" name="standardUsagePostMetric" [displayedIds]="standardUsageMetricDisplayedIds" [(ngModel)]="standardUsagePostMetric"></app-metric-select>
+      </div>
+      <app-standard-usage-rank-chart [mainDimension]="standardUsagePostMainDimension" [timeSpan]="timeSpan" [metric]="standardUsagePostMetric"></app-standard-usage-rank-chart>
+    </div>
+  </div>
+  <div class="panel" fxFlex="50%">
+    <div class="panel-header">
+      <div class="panel-title">标准使用部门排行榜</div>
+    </div>
+    <div class="panel-content">
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <app-metric-select placeholder="指标" name="standardUsageDepartmentMetric" [displayedIds]="standardUsageMetricDisplayedIds" [(ngModel)]="standardUsageDepartmentMetric"></app-metric-select>
+      </div>
+      <app-standard-usage-rank-chart [mainDimension]="standardUsageDepartmentMainDimension" [timeSpan]="timeSpan" [metric]="standardUsageDepartmentMetric"></app-standard-usage-rank-chart>
+    </div>
+  </div>
+</div>

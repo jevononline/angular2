@@ -1,0 +1,24 @@
+<button mat-icon-button [matMenuTriggerFor]="menu">
+  <mat-icon>person</mat-icon>
+</button>
+<mat-menu class="user-profile-panel" #menu="matMenu">
+  <div class="user-profile" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+    <mat-icon>account_circle</mat-icon>
+    <div>
+      <div>{{user.loginId}}</div>
+      <p>{{user.staff?.fullName}}[{{user.staff?.staffNo}}]</p>
+    </div>
+  </div>
+  <button mat-menu-item (click)="openChangePasswordDialog()">
+    <div fxLayout="row" fxLayoutAlign="start center">
+      <mat-icon>lock_outline</mat-icon>
+      <span>修改密码</span>
+    </div>
+  </button>
+  <button mat-menu-item (click)="logout()">
+    <div fxLayout="row" fxLayoutAlign="start center">
+      <mat-icon>exit_to_app</mat-icon>
+      <span>退出</span>
+    </div>
+  </button>
+</mat-menu>

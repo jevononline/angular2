@@ -1,0 +1,34 @@
+<mat-dialog-content>
+  <h2 mat-dialog-title>公告</h2>
+  <form>
+    <div>
+      <div class="form-group">
+        <mat-form-field class="is-half">
+          <input matInput placeholder="公告标题" name="title" readonly [(ngModel)]="model.title">
+        </mat-form-field>
+      </div>
+      <div class="form-group">
+        <mat-form-field>
+          <input matInput [matDatepicker]="startDatePicker" placeholder="开始日期" name="startDate" readonly [(ngModel)]="model.startDate">
+          <mat-datepicker #startDatePicker></mat-datepicker>
+        </mat-form-field>
+
+
+        <mat-form-field>
+          <input matInput [matDatepicker]="endDatePicker" placeholder="结束日期" name="endDate" readonly [(ngModel)]="model.endDate">
+          <mat-datepicker #endDatePicker></mat-datepicker>
+        </mat-form-field>
+
+      </div>
+
+      <div class="form-group is-full">
+        <div [innerHTML]="model.content"></div>
+        <!-- <quill-editor placeholder="公告内容" name="content" class="quill-editor" readOnly="true" bounds=".quill-editor" [(ngModel)]="model.content"></quill-editor> -->
+      </div>
+
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions fxLayout="row" fxLayoutAlign="center center">
+  <button mat-raised-button color="primary" mat-dialog-close>关闭</button>
+</mat-dialog-actions>

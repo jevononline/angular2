@@ -1,0 +1,337 @@
+<mat-sidenav-container fxFlexFill>
+  <mat-sidenav #sidenav mode="side" opened="true">
+    <nav>
+
+      <mat-toolbar fxLayout="row" fxLayoutAlign="center center">
+        <a [routerLink]="['/']" class="logo">
+          <img src="/assets/imgs/logo.png">
+        </a>
+      </mat-toolbar>
+
+      <ux-accordion>
+        <ux-accordion-group>
+          <ux-accordion-heading>
+            <a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">首页</a>
+          </ux-accordion-heading>
+        </ux-accordion-group>
+
+        <ux-accordion-group *ngIf="authService.check('/system-management')">
+          <ux-accordion-heading>
+            <!-- <div [class.active]="url.indexOf('/system-management') == 0">
+              <span>体系管理</span>
+              <mat-icon>expand_more</mat-icon>
+            </div> -->
+            <a [routerLink]="['/system-management/standard-system']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">标准体系</a>
+          </ux-accordion-heading>
+          <!-- <ux-accordion-body>
+            <ux-accordion>
+              <ux-accordion-group *ngIf="authService.check('/system-management/standard-system')">
+                <ux-accordion-heading>
+                  <a [routerLink]="['/system-management/standard-system']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">标准体系管理</a>
+                </ux-accordion-heading>
+              </ux-accordion-group>
+            </ux-accordion>
+          </ux-accordion-body> -->
+        </ux-accordion-group>
+
+        <ux-accordion-group *ngIf="authService.check('/standard-management')">
+          <ux-accordion-heading>
+            <!-- <div [class.active]="url.indexOf('/standard-management') == 0">
+              <span>标准管理</span>
+              <mat-icon>expand_more</mat-icon>
+            </div> -->
+            <a [routerLink]="['/standard-management/standards',{view:0}]" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">标准明细</a>
+          </ux-accordion-heading>
+          <!-- <ux-accordion-body>
+            <ux-accordion>
+              <ux-accordion-group>
+                <ux-accordion-heading>
+                  <a [routerLink]="['/standard-management/standards',{view:0}]" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">标准明细</a>
+                </ux-accordion-heading>
+              </ux-accordion-group>
+            </ux-accordion>
+          </ux-accordion-body> -->
+        </ux-accordion-group>
+
+        <!-- <ux-accordion-group *ngIf="authService.check('/announcing')">
+          <ux-accordion-heading>
+            <a [routerLink]="['/announcing']" routerLinkActive="active" #rlaStandards="routerLinkActive">公告管理</a>
+          </ux-accordion-heading>
+        </ux-accordion-group> -->
+
+        <!-- <ux-accordion-group *ngIf="authService.check('/guidelines')">
+          <ux-accordion-heading>
+            <a [routerLink]="['/guidelines']" routerLinkActive="active" #rlaStandards="routerLinkActive">方针目标</a>
+          </ux-accordion-heading>
+        </ux-accordion-group> -->
+
+        <!-- <ux-accordion-group *ngIf="authService.check('/superior-documents')">
+          <ux-accordion-heading>
+            <a [routerLink]="['/superior-documents']" routerLinkActive="active">上级文件</a>
+          </ux-accordion-heading>
+        </ux-accordion-group> -->
+
+        <ux-accordion-group *ngIf="authService.check('/regulations')">
+          <ux-accordion-heading>
+            <div [class.active]="url.indexOf('/system-management') == 0">
+              <span>标准化文件</span>
+              <mat-icon>expand_more</mat-icon>
+            </div>
+            <!-- <a [routerLink]="['/regulations']" routerLinkActive="active">法律法规</a> -->
+          </ux-accordion-heading>
+
+          <ux-accordion-body>
+            <ux-accordion>
+              <ux-accordion-group *ngIf="authService.check('/regulations')">
+                <ux-accordion-heading>
+                  <a [routerLink]="['/regulations']" routerLinkActive="active">法律法规</a>
+                </ux-accordion-heading>
+              </ux-accordion-group>
+              <ux-accordion-group *ngIf="authService.check('/superior-documents')">
+                <ux-accordion-heading>
+                  <a [routerLink]="['/superior-documents']" routerLinkActive="active">规章制度</a>
+                </ux-accordion-heading>
+              </ux-accordion-group>
+            </ux-accordion>
+          </ux-accordion-body>
+        </ux-accordion-group>
+
+        <!-- <ux-accordion-group *ngIf="authService.check('/standard-system-org-management')">
+          <ux-accordion-heading>
+            <a [routerLink]="['/standard-system-org-management']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">标准组织管理</a>
+          </ux-accordion-heading>
+        </ux-accordion-group> -->
+
+
+
+        <ux-accordion-group>
+          <ux-accordion-heading>
+            <a [routerLink]="['/knowledge-base']" routerLinkActive="active">标准组织机构</a>
+          </ux-accordion-heading>
+        </ux-accordion-group>
+
+        <ux-accordion-group *ngIf="authService.check('/process-management')" [isOpen]="url.indexOf('/process-management') == 0">
+          <ux-accordion-heading>
+            <div [class.active]="url.indexOf('/process-management') == 0">
+              <span>标准制修订</span>
+              <mat-icon>expand_more</mat-icon>
+            </div>
+          </ux-accordion-heading>
+          <ux-accordion-body>
+            <ux-accordion>
+              <ux-accordion-group *ngIf="authService.check('/process-management/processes')">
+                <ux-accordion-heading>
+                  <a [routerLink]="['/process-management/processes']" routerLinkActive="active">制修订计划</a>
+                </ux-accordion-heading>
+              </ux-accordion-group>
+
+              <ux-accordion-group *ngIf="authService.check('/process-management/processes')">
+                <ux-accordion-heading>
+                  <a [routerLink]="['/process-management/standard-revision']" routerLinkActive="active">制修订管理</a>
+                </ux-accordion-heading>
+              </ux-accordion-group>
+
+              <!-- <ux-accordion-group *ngIf="authService.check('/process-management/tasks')">
+                <ux-accordion-heading>
+                  <a [routerLink]="['/process-management/tasks']" routerLinkActive="active">我的任务</a>
+                </ux-accordion-heading>
+              </ux-accordion-group> -->
+
+            </ux-accordion>
+          </ux-accordion-body>
+        </ux-accordion-group>
+
+        <ux-accordion-group *ngIf="authService.check('/management')" [isOpen]="url.indexOf('/management') == 0">
+          <ux-accordion-heading>
+           <div [class.active]="url.indexOf('/management') == 0">
+            <span>标准化工作</span>
+            <mat-icon>expand_more</mat-icon>
+          </div> 
+
+        </ux-accordion-heading>
+        <ux-accordion-body>
+          <ux-accordion>
+
+            <ux-accordion-group *ngIf="authService.check('/process-management/work-plan')">
+              <ux-accordion-heading>
+                <a [routerLink]="['/process-management/work-plan']" routerLinkActive="active">工作规划计划</a>
+              </ux-accordion-heading>
+            </ux-accordion-group>
+
+            <ux-accordion-group *ngIf="authService.check('/standard-system-org-management')">
+              <ux-accordion-heading>
+                <a [routerLink]="['/standard-system-org-management']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">标准组织管理</a>
+              </ux-accordion-heading>
+            </ux-accordion-group>
+
+            <ux-accordion-group *ngIf="authService.check('/management/announcements')">
+              <ux-accordion-heading>
+                <a [routerLink]="['/management/announcements']" routerLinkActive="active">公告管理</a>
+              </ux-accordion-heading>
+            </ux-accordion-group>
+
+            <ux-accordion-group *ngIf="authService.check('/guidelines')">
+              <ux-accordion-heading>
+                <a [routerLink]="['/guidelines']" routerLinkActive="active" #rlaStandards="routerLinkActive">方针目标</a>
+              </ux-accordion-heading>
+            </ux-accordion-group>
+
+            <ux-accordion-group *ngIf="authService.check('/management/data-configuration')">
+              <ux-accordion-heading>
+                <a [routerLink]="['/management/data-configuration',{view:0}]" routerLinkActive="active" #rlaStandards="routerLinkActive">标准执行分配</a>
+              </ux-accordion-heading>
+            </ux-accordion-group>
+
+          </ux-accordion>
+        </ux-accordion-body>
+      </ux-accordion-group>
+
+      <ux-accordion-group *ngIf="authService.check('/evaluations')" [isOpen]="url.indexOf('/evaluations') == 0">
+        <ux-accordion-heading>
+           <!-- <div [class.active]="url.indexOf('/evaluations') == 0">
+              <span>自我评价</span>
+              <mat-icon>expand_more</mat-icon>
+            </div>  -->
+            <a [routerLink]="['/evaluations']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">自我评价</a>
+          </ux-accordion-heading>
+          <!-- <ux-accordion-body>
+            <ux-accordion>
+              <ux-accordion-group *ngIf="authService.check('/evaluations/self')">
+                <ux-accordion-heading>
+                  <a [routerLink]="['/evaluations/self']" routerLinkActive="active">自评</a>
+                </ux-accordion-heading>
+              </ux-accordion-group>
+              <ux-accordion-group *ngIf="authService.check('/evaluations/audits')">
+                <ux-accordion-heading>
+                  <a [routerLink]="['/evaluations/audits']" routerLinkActive="active">内审</a>
+                </ux-accordion-heading>
+              </ux-accordion-group>
+            </ux-accordion>
+          </ux-accordion-body> -->
+        </ux-accordion-group>
+
+        <ux-accordion-group *ngIf="authService.check('/cost-management')">
+          <ux-accordion-heading>
+            <a [routerLink]="['/cost-management']" routerLinkActive="active">费用管理</a>
+          </ux-accordion-heading>
+        </ux-accordion-group>
+
+        <ux-accordion-group *ngIf="authService.check('/training')" [isOpen]="url.indexOf('/training') == 0">
+          <ux-accordion-heading>
+            <!-- <div [class.active]="url.indexOf('/training') == 0">
+              <span>学习培训</span>
+              <mat-icon>expand_more</mat-icon> 
+            </div> -->
+            <a [routerLink]="['/training']" routerLinkActive="active"  [routerLinkActiveOptions]="{exact:true}" >学习培训</a>
+          </ux-accordion-heading>
+          <!-- <ux-accordion-body>
+            <ux-accordion>
+              <ux-accordion-group *ngIf="authService.check('/training/study')">
+                <ux-accordion-heading>
+                  <a [routerLink]="['/training/study']" routerLinkActive="active">共同学习</a>
+                </ux-accordion-heading>
+              </ux-accordion-group>
+            </ux-accordion>
+          </ux-accordion-body> -->
+        </ux-accordion-group>
+
+        <ux-accordion-group *ngIf="authService.check('/standard-analytics')">
+          <ux-accordion-heading>
+            <a [routerLink]="['/standard-analytics',{view:'standard-asset-analysis'}]" routerLinkActive="active">标准化指数</a>
+          </ux-accordion-heading>
+        </ux-accordion-group>
+
+        <ux-accordion-group *ngIf="authService.check('/online-editing')">
+          <ux-accordion-heading>
+            <a [routerLink]="['/online-editing']" routerLinkActive="active">在线编辑</a>
+          </ux-accordion-heading>
+        </ux-accordion-group>
+
+        <ux-accordion-group *ngIf="authService.check('/management')" [isOpen]="url.indexOf('/management') == 0">
+          <ux-accordion-heading>
+            <div [class.active]="url.indexOf('/management') == 0">
+              <span>系统管理</span>
+              <mat-icon>expand_more</mat-icon>
+            </div>
+          </ux-accordion-heading>
+          <ux-accordion-body>
+            <ux-accordion>
+
+              <ux-accordion-group *ngIf="authService.check('/management/org')">
+                <ux-accordion-heading>
+                  <a [routerLink]="['/management/org']" routerLinkActive="active">组织机构</a>
+                </ux-accordion-heading>
+              </ux-accordion-group>
+
+              <ux-accordion-group *ngIf="authService.check('/management/permission/users')">
+                <ux-accordion-heading>
+                  <a [routerLink]="['/management/permission/users']" routerLinkActive="active">用户管理</a>
+                </ux-accordion-heading>
+              </ux-accordion-group>
+
+              <ux-accordion-group *ngIf="authService.check('/management/permission/roles')">
+                <ux-accordion-heading>
+                  <a [routerLink]="['/management/permission/roles']" routerLinkActive="active">角色管理</a>
+                </ux-accordion-heading>
+              </ux-accordion-group>
+
+             <!-- <ux-accordion-group *ngIf="authService.check('/management/permission')" [isOpen]="url.indexOf('/management/permission') == 0">
+                <ux-accordion-heading>
+                  <div [class.active]="url.indexOf('/management/permission') == 0">
+                    <span>权限管理</span>
+                    <mat-icon>expand_more</mat-icon>
+                  </div>
+                </ux-accordion-heading>
+                <ux-accordion-body>
+                  <ux-accordion>
+
+                  </ux-accordion>
+                </ux-accordion-body>
+              </ux-accordion-group>  -->
+
+              <ux-accordion-group *ngIf="authService.check('/management/data-configuration')">
+                <ux-accordion-heading>
+                  <a [routerLink]="['/management/data-configuration']" routerLinkActive="active">系统数据配置</a>
+                </ux-accordion-heading>
+              </ux-accordion-group>
+
+              <ux-accordion-group *ngIf="authService.check('/management/process-configuration')">
+                <ux-accordion-heading>
+                  <a [routerLink]="['/management/process-configuration']" routerLinkActive="active">流程配置</a>
+                </ux-accordion-heading>
+              </ux-accordion-group>
+
+            </ux-accordion>
+          </ux-accordion-body>
+        </ux-accordion-group>
+
+      </ux-accordion>
+
+    </nav>
+  </mat-sidenav>
+  <section>
+    <mat-toolbar color="primary">
+      <div fxFlex="none">
+        <button mat-icon-button (click)="sidenav.toggle()">
+          <mat-icon>menu</mat-icon>
+        </button>
+      </div>
+      <div fxFlex fxLayout="row" fxLayoutAlign="end center">
+        <!-- <button *ngIf="authService.check('/process-management/tasks')" mat-icon-button [routerLink]="['/process-management/tasks']">
+          <mat-icon>notifications</mat-icon>
+        </button> -->
+        <ng-container *ngIf="userInfo">
+          <div class="login-detail">{{userInfo.fullName}}</div>
+          <div class="login-detail" *ngFor="let item of userInfo.posts">{{item.department && item.department.name}}/{{item.name}}</div>
+        </ng-container>
+        <app-user-profile></app-user-profile>
+      </div>
+    </mat-toolbar>
+    <main>
+      <h1 *ngIf="title">{{title}}</h1>
+      <section>
+        <router-outlet></router-outlet>
+      </section>
+    </main>
+  </section>
+</mat-sidenav-container>

@@ -1,0 +1,99 @@
+<ux-table-container>
+  <mat-table #table [dataSource]="dataSource" matSort matSortActive="id" matSortDisableClear matSortDirection="desc">
+
+    <ng-container matColumnDef="selection">
+      <mat-header-cell *matHeaderCellDef>
+        <mat-checkbox color="primary" (change)="$event ? allToggle() : null" [checked]="isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
+        </mat-checkbox>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+
+        <mat-checkbox color="primary" (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row.id) : null" [checked]="selection.isSelected(row.id)">
+        </mat-checkbox>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> 序号 </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="structureNo">
+      <mat-header-cell *matHeaderCellDef> 所属体系号 </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.standardSystem?.structureNo}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="standardCode">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> 标准编码 </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.standardCode}} </mat-cell>
+      </ng-container>
+
+    <ng-container matColumnDef="standardNo">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> 标准号 </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.standardNo}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header style="flex:0 0 20%"> 标准名称 </mat-header-cell>
+      <mat-cell *matCellDef="let row" style="flex:0 0 20%"> {{row.name}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="categoryValue">
+      <mat-header-cell *matHeaderCellDef> 类型 </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.categoryValue|standardCategory}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="adoptions">
+      <mat-header-cell *matHeaderCellDef> 采标编号 </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <mat-icon *ngIf="row.adoptions?.length" [matTooltip]="getAdoptionString(row.adoptions)">flare</mat-icon>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="replacingStandards">
+      <mat-header-cell *matHeaderCellDef> 被代替标准 </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <mat-icon *ngIf="row.replacingStandards?.length" [matTooltip]="getReplacingStandardsString(row.replacingStandards)">find_replace</mat-icon>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="department">
+      <mat-header-cell *matHeaderCellDef> 归口部门 </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.department.name}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="publishDate">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> 发布日期 </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.publishDate}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="executeDate">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> 实施日期 </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.executeDate}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef> 操作 </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+
+        <button mat-icon-button matTooltip="下载" *ngIf="authService.check('/standard-management/standards@download')" [disabled]="row.files?.length===0" [appDownload]="{name:row.name,files:row.files}" (complete)="onDownloadComplete(row.id)">
+          <mat-icon>file_download</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="查看" *ngIf="authService.check('/standard-management/standards/:form/0/:id')" [routerLink]="['read',0,row.id]">
+          <mat-icon>insert_drive_file</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="编辑" *ngIf="authService.check('/standard-management/standards/:form/2/:id')" [disabled]="isEditable(row)" [routerLink]="['update',2,row.id]">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="删除" *ngIf="authService.check('/standard-management/standards@delete')" (click)="openDeletionDialog(row)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+  <mat-paginator #paginator [length]="dataSource.total" [pageSize]="appConfig.pageSize" [pageSizeOptions]="appConfig.pageSizeOptions">
+  </mat-paginator>
+</ux-table-container>

@@ -1,0 +1,24 @@
+<nav mat-tab-nav-bar>
+  <a mat-tab-link (click)="selectTab(0)" [active]="selectedTab===0">待办任务</a>
+  <a mat-tab-link (click)="selectTab(1)" [active]="selectedTab===1">已办任务</a>
+</nav>
+<div class="panel">
+  <div class="panel-header">
+    <div fxFlex fxLayout="row">
+      <div fxFlex="50" fxLayoutAlign="start center">
+      </div>
+      <div fxFlex="50" fxLayout="row" fxLayoutAlign="end center">
+        <mat-form-field class="is-half" floatPlaceholder="never">
+          <mat-icon matPrefix>search</mat-icon>
+          <input matInput #keyword placeholder="搜索">
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <div class="panel-body">
+
+    <app-task-table *ngIf="selectedTab===0" [filter]="filter"></app-task-table>
+    <app-task-done-table *ngIf="selectedTab===1" [filter]="filter"></app-task-done-table>
+
+  </div>
+</div>

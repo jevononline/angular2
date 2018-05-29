@@ -1,0 +1,70 @@
+<div class="panel">
+  <div class="panel-content">
+    <h3 class="title">{{task.name}} - {{task.businessInstance.name}} </h3>
+    <ng-container [ngSwitch]="processDefinitionKey">
+      <ng-container *ngSwitchCase="'standardRevisionPlanProcess'">
+        <ng-container [ngSwitch]="task.taskDefinitionKey">
+          <app-task-standard-revision-plan-set-receiving-departments *ngSwitchCase="'setReceivingDepartment'" [task]="task"></app-task-standard-revision-plan-set-receiving-departments>
+          <app-task-standard-revision-plan-set-editor *ngSwitchCase="'setEditor'" [task]="task"></app-task-standard-revision-plan-set-editor>
+          <app-task-standard-revision-plan-edit *ngSwitchCase="'edit'" [task]="task"></app-task-standard-revision-plan-edit>
+          <app-task-standard-revision-plan-review *ngSwitchCase="'departmentReview'" [task]="task"></app-task-standard-revision-plan-review>
+
+          <app-task-standard-revision-plan-and-opinion-review *ngSwitchCase="'standardOfficeReviewForDepartment'" [task]="task"></app-task-standard-revision-plan-and-opinion-review>
+
+          <app-task-standard-revision-plan-review *ngSwitchCase="'managementCommitteeReview'" [task]="task" [isOpinionReviewed]="true"></app-task-standard-revision-plan-review>
+          <app-task-standard-revision-plan-review *ngSwitchCase="'technicalCommitteeReview'" [task]="task" [isOpinionReviewed]="true"></app-task-standard-revision-plan-review>
+          <app-task-standard-revision-plan-review *ngSwitchCase="'workingCommitteeReview'" [task]="task" [isOpinionReviewed]="true"></app-task-standard-revision-plan-review>
+          <app-task-standard-revision-plan-review *ngSwitchCase="'standardCommitteeReview'" [task]="task" [isOpinionReviewed]="true"></app-task-standard-revision-plan-review>
+
+          <app-task-standard-revision-plan-and-opinion-review *ngSwitchCase="'standardOfficeReviewForManagementExport'" [task]="task"></app-task-standard-revision-plan-and-opinion-review>
+          <app-task-standard-revision-plan-and-opinion-review *ngSwitchCase="'standardOfficeReviewForTechnicalExport'" [task]="task"></app-task-standard-revision-plan-and-opinion-review>
+          <app-task-standard-revision-plan-and-opinion-review *ngSwitchCase="'standardOfficeReviewForWorkingExport'" [task]="task"></app-task-standard-revision-plan-and-opinion-review>
+          <app-task-standard-revision-plan-and-opinion-review *ngSwitchCase="'standardOfficeReviewForCommittee'" [task]="task"></app-task-standard-revision-plan-and-opinion-review>
+
+          <app-task-standard-revision-plan-publish *ngSwitchCase="'publish'" [task]="task"></app-task-standard-revision-plan-publish>
+        </ng-container>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'standardRevisionProcess'">
+        <ng-container [ngSwitch]="task.taskDefinitionKey">
+          <app-task-standard-revision-edit *ngSwitchCase="'edit'" [task]="task"></app-task-standard-revision-edit>
+          <app-task-standard-revision-edit *ngSwitchCase="'editAfterResponsibleDepartmentReview'" [task]="task"></app-task-standard-revision-edit>
+          <app-task-standard-revision-edit *ngSwitchCase="'editAfterAssistantDepartmentReview'" [task]="task"></app-task-standard-revision-edit>
+          <app-task-standard-revision-edit *ngSwitchCase="'editAfterStandardOfficeReviewForEdit'" [task]="task"></app-task-standard-revision-edit>
+
+          <app-task-standard-revision-review *ngSwitchCase="'responsibleDepartmentReview'" [task]="task">></app-task-standard-revision-review>
+          <app-task-standard-revision-review *ngSwitchCase="'assistantDepartmentReview'" [task]="task">></app-task-standard-revision-review>
+          <app-task-standard-revision-standard-office-review *ngSwitchCase="'standardOfficeReviewForEdit'" [task]="task">></app-task-standard-revision-standard-office-review>
+          <app-task-standard-revision-soliciting *ngSwitchCase="'solicitOpinion'" [task]="task"></app-task-standard-revision-soliciting>
+          <app-task-standard-revision-and-solicited-opinion-review *ngSwitchCase="'drafterReplyOpinion'" [task]="task"></app-task-standard-revision-and-solicited-opinion-review>
+          <app-task-standard-revision-and-solicited-opinion-review *ngSwitchCase="'drafterReplyOpinionAfterstandardOfficeReview'" [task]="task"></app-task-standard-revision-and-solicited-opinion-review>
+          <app-task-standard-revision-and-solicited-opinion-review *ngSwitchCase="'drafterReplyOpinionAfterExportCommitteeReview'" [task]="task"></app-task-standard-revision-and-solicited-opinion-review>
+          <app-task-standard-revision-and-solicited-opinion-review *ngSwitchCase="'drafterReplyOpinionAfterStandardCommitteeReview'" [task]="task"></app-task-standard-revision-and-solicited-opinion-review>
+          <app-task-standard-revision-standard-office-review [afterSolicited]="true" *ngSwitchCase="'standardOfficeReviewForDrafterReplyOpinion'" [task]="task"></app-task-standard-revision-standard-office-review>
+          <app-task-standard-revision-review [afterSolicited]="true" *ngSwitchCase="'exportCommitteeReview'" [task]="task"></app-task-standard-revision-review>
+          <app-task-standard-revision-review [afterSolicited]="true" *ngSwitchCase="'standardCommitteeReview'" [task]="task"></app-task-standard-revision-review>
+          <app-task-standard-revision-publish *ngSwitchCase="'publish'" [task]="task"></app-task-standard-revision-publish>
+          <!-- 
+            edit
+            assistantDepartmentReview
+            standardOfficeReviewForEdit
+            editAfterAssistantDepartmentReview
+            responsibleDepartmentReview
+            editAfterResponsibleDepartmentReview
+            solicitOpinion
+            editAfterStandardOfficeReviewForEdit
+            drafterReplyOpinion
+            standardOfficeReviewForDrafterReplyOpinion
+            exportCommitteeReview
+            standardCommitteeReview
+            publish
+            drafterReplyOpinionAfterExportCommitteeReview
+            drafterReplyOpinionAfterStandardCommitteeReview
+            drafterReplyOpinionAfterstandardOfficeReview 
+          -->
+        </ng-container>
+      </ng-container>
+    </ng-container>
+
+  </div>
+</div>

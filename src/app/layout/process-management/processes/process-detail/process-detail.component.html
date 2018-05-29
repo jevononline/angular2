@@ -1,0 +1,27 @@
+<div class="panel">
+  	<div class="panel-content" fxFlex>
+	  <div class="process-item-panel" *ngFor="let process of processList; let last = last;">
+	  	<div fxFlex="10" fxLayout="column">
+	  		<div class="process-title">{{process.taskDefinitionName}}</div>
+	  		<div class="arrow" fxLayout="column" fxFlex="90" fxLayoutAlign="start start" *ngIf="!last">
+	  			<div fxFlex class="arrow-line"></div>
+	  			<img fxFlex="none" src="/assets/imgs/arrow.png">
+	  		</div>
+	  	</div>
+	  	<div fxFlex="90">
+			<div class="process-conent">
+				<process-start *ngIf="process.taskDefinitionKey==='start'" [task]="process"></process-start>
+				<process-set-receiving-department *ngIf="process.taskDefinitionKey==='setReceivingDepartment'" [task]="process"></process-set-receiving-department>
+				<process-set-editor *ngIf="process.taskDefinitionKey==='setEditor'" [task]="process"></process-set-editor>
+				<process-edit *ngIf="process.taskDefinitionKey==='edit'" [task]="process"></process-edit>
+				<process-department-review *ngIf="process.taskDefinitionKey==='departmentReview'" [task]="process"></process-department-review>
+				<process-standard-office-review-for-department *ngIf="process.taskDefinitionKey==='standardOfficeReviewForDepartment'" [task]="process"></process-standard-office-review-for-department>
+				<process-technical-committee-review *ngIf="process.taskDefinitionKey==='technicalCommitteeReview'" [task]="process"></process-technical-committee-review>
+				<process-management-committee-review *ngIf="process.taskDefinitionKey==='managementCommitteeReview'" [task]="process"></process-management-committee-review>
+				<process-standard-committee-review *ngIf="process.taskDefinitionKey==='standardCommitteeReview'" [task]="process"></process-standard-committee-review>
+				<process-publish *ngIf="process.taskDefinitionKey==='publish'" [task]="process"></process-publish>
+			</div>
+	  	</div>
+	  </div>
+	</div>
+</div>

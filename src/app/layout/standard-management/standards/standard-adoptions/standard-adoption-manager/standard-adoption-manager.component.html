@@ -1,0 +1,14 @@
+<div *ngFor="let item of myModel as list;let i=index;let isLast=last;">
+  <mat-form-field floatPlaceholder="never">
+    <input matInput [placeholder]="placeholderStandardNo" name="standardNo" required [disabled]="disabled" [(ngModel)]="myModel[i].standardNo" (change)="onChange()">
+  </mat-form-field>
+  <app-standard-adoption-level-select [placeholder]="placeholderAdoptionLevel" name="standardAdoptionLevel" required floatPlaceholder="never" [disabled]="disabled" [(ngModel)]="myModel[i].standardAdoptionLevel" (change)="onChange()"></app-standard-adoption-level-select>
+
+  <button type="button" mat-icon-button matTooltip="移除" [disabled]="disabled" (click)="remove(i)">
+    <mat-icon>remove</mat-icon>
+  </button>
+</div>
+
+<button type="button" mat-icon-button matTooltip="添加" [disabled]="disabled" (click)="add()">
+  <mat-icon>add</mat-icon>
+</button>

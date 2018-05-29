@@ -1,0 +1,19 @@
+<form novalidate autocomplete="off" (ngSubmit)="onSubmit()" #form="ngForm">
+  <mat-dialog-content>
+    <h2 mat-dialog-title>添加人员</h2>
+    <div class="form-group">
+      <mat-form-field class="is-full">
+        <input matInput placeholder="添加至" [disabled]="true" [value]="data.name">
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <app-staff-select placeholder="人员" name="staffList" [multiple]="true" [ofId]="data.id" level="children" required [(ngModel)]="staffList"></app-staff-select>
+    </div>
+
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button type="submit" mat-raised-button color="primary" [disabled]="form.pristine || form.invalid || submitting">提交</button>
+    <button type="button" mat-button mat-dialog-close>取消</button>
+  </mat-dialog-actions>
+</form>

@@ -1,0 +1,7 @@
+<ol>
+  <li *ngFor="let item of list">
+    <div fxLayout="row">
+      <div fxFlex><a [href]="item.url" target="_blank">{{item.name}}</a></div>
+    </div>
+  </li>
+</ol>

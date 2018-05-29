@@ -1,0 +1,107 @@
+<div class="panel">
+  <div class="panel-content">
+    <form novalidate autocomplete="off" (ngSubmit)="onSubmit()" #form="ngForm">
+      <div class="form-group">
+        <app-standard-category-select name="standardCategory" placeholder="类型" [isDisabledOption]="isStandardCategoryOptionDisabled.bind(this)" required [disabled]="action === 'read'" [(ngModel)]="model.categoryValue"></app-standard-category-select>
+        <mat-form-field>
+          <input matInput placeholder="标准编码" name="standardCode" maxlength="16" [disabled]="action === 'read'" [(ngModel)]="model.standardCode" #standardCode="ngModel">
+        </mat-form-field>
+      </div>
+      <div class="form-group">
+        <app-standard-system-select name="standardSystem" placeholder="所属体系" required [disabled]="action === 'read'" [(ngModel)]="model.standardSystem"></app-standard-system-select>
+        <app-department-select name="department" required placeholder="归口部门" [disabled]="action === 'read'" [(ngModel)]="model.department"></app-department-select>
+        <app-user-select placeholder="起草人" name="user" of="standard-network" level="descendant" [hasEmptyOption]="true" [disabled]="action === 'read'" [(ngModel)]="model.drafter"></app-user-select>
+      </div>
+      <div class="form-group">
+        <mat-form-field class="is-one-quarter">
+          <input matInput placeholder="标准名称" name="name" required [disabled]="action === 'read'" [(ngModel)]="model.name" #name="ngModel">
+          <mat-error *ngIf="name.errors?.required">
+            标准名称必填
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="标准号" name="standardNo" required validateDocumentNo validateUnique validateUrl="/api/standards/availability/{{model.id}}/0/standard-no" [disabled]="action === 'read'" [(ngModel)]="model.standardNo" #standardNo="ngModel">
+          <mat-error *ngIf="standardNo.errors?.required">
+            标准号必填
+          </mat-error>
+          <mat-error *ngIf="standardNo.errors?.validateDocumentNo">
+            标准号格式错误
+          </mat-error>
+          <mat-error *ngIf="standardNo.errors?.validateUnique">
+            标准号被占用
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="form-group">
+        <mat-form-field>
+          <input matInput [matDatepicker]="startDatePicker" placeholder="发布日期" name="publishDate" required [max]="executeDate.value" [disabled]="action === 'read'" [(ngModel)]="model.publishDate" #publishDate="ngModel">
+          <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #startDatePicker></mat-datepicker>
+          <mat-error *ngIf="publishDate.errors?.required">
+            发布日期必填
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput [matDatepicker]="endDatePicker" placeholder="实施日期" name="executeDate" required [min]="publishDate.value" [disabled]="action === 'read'" [(ngModel)]="model.executeDate" #executeDate="ngModel">
+          <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #endDatePicker></mat-datepicker>
+          <mat-error *ngIf="executeDate.errors?.required">
+            实施日期必填
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-group">
+        <label>采标编号</label>
+        <app-standard-adoption-manager name="adoptions" placeholderStandardNo="采标编号" placeholderAdoptionLevel="采标程度" [disabled]="action === 'read'" [(ngModel)]="model.adoptions"></app-standard-adoption-manager>
+      </div>
+
+      <div class="form-group">
+        <label>被替代标准号</label>
+        <app-standard-replacing-manager name="replacingStandards" [disabled]="action === 'read'" [(ngModel)]="model.replacingStandards"></app-standard-replacing-manager>
+      </div>
+
+      <div class="form-group">
+        <label>标准正文</label>
+        <app-upload name="mainFile" [disabled]="action === 'read'" [(ngModel)]="model.mainFile" (view)="onView()" #mainFile="ngModel">
+          <button type="button" mat-icon-button [disabled]="action === 'read'">
+            <mat-icon>file_upload</mat-icon>
+          </button>
+        </app-upload>
+      </div>
+
+      <div class="form-group">
+        <label>流程图</label>
+        <app-upload name="flowChartFiles" [multiple]="true" [disabled]="action === 'read'" [(ngModel)]="model.flowChartFiles" #flowChartFiles="ngModel">
+          <button type="button" mat-icon-button [disabled]="action === 'read'">
+            <mat-icon>file_upload</mat-icon>
+          </button>
+        </app-upload>
+      </div>
+
+      <div class="form-group">
+        <label>报告与记录</label>
+        <app-upload name="reportFiles" [multiple]="true" [disabled]="action === 'read'" [(ngModel)]="model.reportFiles" #reportFiles="ngModel">
+          <button type="button" mat-icon-button [disabled]="action === 'read'">
+            <mat-icon>file_upload</mat-icon>
+          </button>
+        </app-upload>
+      </div>
+
+      <div class="form-group">
+        <mat-form-field class="is-one-third">
+          <textarea matInput placeholder="备注" name="remark" [disabled]="action === 'read'" maxlength="255" [(ngModel)]="model.remark" #remark="ngModel"></textarea>
+          <mat-error *ngIf="remark.error?.maxlength">
+            最多255个字符
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-actions" fxLayout="row">
+        <button type="submit" mat-raised-button color="primary" [disabled]="form.pristine || form.invalid || form.pending || submitting">提交</button>
+        <button type="button" mat-button (click)="back()">取消</button>
+      </div>
+    </form>
+  </div>
+</div>

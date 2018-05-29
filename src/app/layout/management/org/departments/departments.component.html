@@ -1,0 +1,61 @@
+<div class="panel">
+  <div class="panel-header">
+    <div fxFlex fxLayout="row">
+      <div fxFlex="50" fxLayoutAlign="start center">
+
+      </div>
+      <div fxFlex="50" fxLayout="row" fxLayoutAlign="end center">
+        <mat-form-field class="is-half" floatPlaceholder="never">
+          <mat-icon matPrefix>search</mat-icon>
+          <input matInput #keyword placeholder="搜索">
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <div class="panel-body">
+    <ux-table-container>
+      <mat-table #table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> 序号 </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> 名称 </mat-header-cell>
+          <mat-cell *matCellDef="let row">{{row.name}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="abbr">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> 简称 </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.abbr}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="leader">
+          <mat-header-cell *matHeaderCellDef> 分管领导 </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.leader?.fullName}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="postCount">
+          <mat-header-cell *matHeaderCellDef> 岗位数 </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.postCount}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="staffCount">
+          <mat-header-cell *matHeaderCellDef> 人员数 </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.staffCount}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="createdAt">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> 创建时间 </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.createdAt | dateTime}} </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+
+      <mat-paginator #paginator [length]="dataSource.total" [pageSize]="appConfig.pageSize" [pageSizeOptions]="appConfig.pageSizeOptions">
+      </mat-paginator>
+    </ux-table-container>
+  </div>
+</div>

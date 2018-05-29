@@ -1,0 +1,16 @@
+:host {
+  display: inline-block;
+}
+
+.circle {
+  cursor: pointer;
+  width: 12px;
+  height: 12px;
+  border-radius: 100%;
+  &.disabled {
+    background: #f00;
+  }
+  &.enabled {
+    background: #090;
+  }
+}

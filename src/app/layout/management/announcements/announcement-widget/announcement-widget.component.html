@@ -1,0 +1,13 @@
+<div class="widget">
+  <div class="widget-header" fxLayout="row" fxLayoutAlign="start center">
+    <div fxFlex fxLayout="row" fxLayoutAlign="start center">
+      <mat-icon>volume_up</mat-icon>公告
+    </div>
+    <button mat-icon-button matTooltip="查看更多" matTooltipPosition="left" [routerLink]="['/announcing']">
+      <mat-icon>more_horiz</mat-icon>
+    </button>
+  </div>
+  <div class="widget-body">
+    <app-announcement-list></app-announcement-list>
+  </div>
+</div>

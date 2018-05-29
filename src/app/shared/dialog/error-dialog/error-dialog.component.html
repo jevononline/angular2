@@ -1,0 +1,9 @@
+<mat-dialog-content>
+  <div [ngSwitch]="data.id">
+    <p *ngSwitchCase="'announcements.create.413'">新建公告失败，公告内容过大!</p>
+    <p *ngSwitchDefault>?</p>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+  <button mat-button color="primary" mat-dialog-close>确认</button>
+</mat-dialog-actions>

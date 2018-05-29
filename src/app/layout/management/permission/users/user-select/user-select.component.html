@@ -1,0 +1,8 @@
+<mat-form-field>
+  <mat-select [placeholder]="placeholder" name="item" class="is-full" [multiple]="multiple" [disabled]="disabled" [compareWith]="compareWith" [(ngModel)]="myModel" [required]="required" (selectionChange)="onChange()" (closed)="onClose()">
+    <mat-option *ngIf="hasEmptyOption">无</mat-option>
+    <mat-option *ngFor="let item of list" [disabled]="isDisabled(item)" [value]="item">
+      {{ item.staff.fullName }}[{{ item.staff.staffNo }}] - {{item.loginId}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>

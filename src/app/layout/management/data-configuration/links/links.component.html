@@ -1,0 +1,60 @@
+<div class="panel">
+  <div class="panel-header">
+    <div fxFlex fxLayout="row">
+      <div fxFlex="50" fxLayoutAlign="start center">
+        <button mat-raised-button color="primary" (click)="openFormDialog({action:'create',node:null})">新建常用网站</button>
+      </div>
+      <div fxFlex="50" fxLayout="row" fxLayoutAlign="end center" class="actions">
+        <mat-form-field class="is-half" floatPlaceholder="never">
+          <mat-icon matPrefix>search</mat-icon>
+          <input matInput #keyword placeholder="搜索">
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <div class="panel-body">
+    <ux-table-container>
+      <mat-table #table [dataSource]="dataSource" matSort matSortActive="id" matSortDisableClear matSortDirection="desc">
+
+        <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> 序号 </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> 网站名称 </mat-header-cell>
+          <mat-cell *matCellDef="let row">{{row.name}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="url">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> 网址 </mat-header-cell>
+          <mat-cell *matCellDef="let row">{{row.url}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="createdAt">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> 创建时间 </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.createdAt | dateTime}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef> 操作 </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <button mat-icon-button matTooltip="编辑" (click)="openFormDialog({action:'update',node:row})">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="删除" (click)="openDeletionDialog(row)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+      </mat-table>
+      <mat-paginator #paginator [length]="dataSource.total" [pageSize]="appConfig.pageSize" [pageSizeOptions]="appConfig.pageSizeOptions">
+      </mat-paginator>
+
+    </ux-table-container>
+  </div>
+</div>

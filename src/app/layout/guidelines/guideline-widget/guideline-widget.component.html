@@ -1,0 +1,21 @@
+<div class="widget">
+  <div class="widget-header" fxLayout="row" fxLayoutAlign="start center">
+    <div fxFlex fxLayout="row" fxLayoutAlign="start center">
+      <mat-icon>send</mat-icon>目标规划
+    </div>
+  </div>
+  <div class="widget-body" fxLayout="row" fxLayoutAlign="stretch center" fxLayoutGap="10px">
+    <a class="icon-box primary" (click)="openTrendChart(list[0])" fxFlex *ngIf="list[0]">
+      <mat-icon>gps_fixed</mat-icon>
+      <div>{{list[0].name}}</div>
+    </a>
+    <a class="icon-box accent" (click)="openTrendChart(list[1])" fxFlex *ngIf="list[1]">
+      <mat-icon>build</mat-icon>
+      <div>{{list[1].name}}</div>
+    </a>
+    <a class="icon-box warn" (click)="openTrendChart(list[2])" fxFlex *ngIf="list[2]">
+      <mat-icon>description</mat-icon>
+      <div>{{list[2].name}}</div>
+    </a>
+  </div>
+</div>

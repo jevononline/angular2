@@ -1,0 +1,13 @@
+<div fxFlex fxLayout="column">
+	<div class="task-info" fxLayout="row" fxLayoutAlign="start start">
+		<div class="title">操作人：{{task.createdBy.staff.fullName}}</div>
+		<div class="title">操作时间：{{task.createdAt | date : 'yyyy-MM-dd HH:mm:ss'}}</div>
+	</div>
+	<div class="task-info">
+		<div class="title">设置的编制部门：
+			<ng-container *ngFor="let department of task.data.departments; let last = last;">{{department.name}}
+				<span *ngIf="!last">/</span>
+			</ng-container>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,47 @@
+<div class="panel">
+  <div class="panel-body">
+    <ux-table-container>
+      <mat-table #table [dataSource]="dataSource" matSort>
+
+        <ng-container matColumnDef="standardSystem">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> 标准体系 </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.standardSystem.structureNo}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="standardNo">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> 标准编号 </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.standardNo}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> 标准名称 </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="department">
+          <mat-header-cell *matHeaderCellDef> 归口部门 </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.department.name}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="drafter">
+          <mat-header-cell *matHeaderCellDef> 起草人 </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.drafter?.staff.fullName}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef class="has-text-centered"> 操作 </mat-header-cell>
+          <mat-cell *matCellDef="let row" class="has-text-centered">
+            <button type="button" mat-icon-button matTooltip="下载" [appDownload]="{name:row.name,files:row.files}">
+              <mat-icon>file_download</mat-icon>
+            </button>
+            <button type="button" mat-icon-button matTooltip="移除" *ngIf="mode==='management'" (click)="removeOne(row)">
+              <mat-icon>remove</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+    </ux-table-container>
+  </div>
+</div>

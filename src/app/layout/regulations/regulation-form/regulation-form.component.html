@@ -1,0 +1,68 @@
+<div class="panel">
+  <div class="panel-content">
+    <form novalidate autocomplete="off" (ngSubmit)="onSubmit()" #form="ngForm">
+
+      <div class="form-group">
+        <app-regulation-category-select placeholder="类型" name="category" required [disabled]="action === 'read'" [(ngModel)]="model.category" #category="ngModel"></app-regulation-category-select>
+      </div>
+
+      <div class="form-group">
+        <mat-form-field>
+          <input matInput placeholder="发布文号" name="documentNo" required [disabled]="action === 'read'" [(ngModel)]="model.documentNo" #documentNo="ngModel">
+          <mat-error *ngIf="documentNo.errors?.required">
+            发布文号必填
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="form-group">
+        <mat-form-field class="is-one-quarter">
+          <input matInput placeholder="名称" name="documentName" required [disabled]="action === 'read'" [(ngModel)]="model.documentName" #documentName="ngModel">
+          <mat-error *ngIf="documentName.errors?.required">
+            名称必填
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-group">
+        <label class="required">文件</label>
+        <app-upload name="file" required [disabled]="action === 'read'" [(ngModel)]="model.file" #file="ngModel">
+          <button type="button" mat-icon-button [disabled]="action === 'read'">
+            <mat-icon>file_upload</mat-icon>
+          </button>
+        </app-upload>
+      </div>
+      <div class="form-group">
+        <mat-form-field>
+          <input matInput placeholder="发文单位" name="issuer" required [disabled]="action === 'read'" [(ngModel)]="model.issuer" #issuer="ngModel">
+          <mat-error *ngIf="issuer.errors?.required">
+            发文单位必填
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="form-group">
+        <mat-form-field>
+          <input matInput [matDatepicker]="executeDatePicker" placeholder="实施日期" name="executeDate" required [disabled]="action === 'read'" [(ngModel)]="model.executeDate" #executeDate="ngModel">
+          <mat-datepicker-toggle matSuffix [for]="executeDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #executeDatePicker></mat-datepicker>
+          <mat-error *ngIf="executeDate.errors?.required">
+            实施日期必填
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-group">
+        <mat-form-field class="is-one-third">
+          <textarea matInput placeholder="备注" name="remark" maxlength="255" [disabled]="action === 'read'" [(ngModel)]="model.remark" #remark="ngModel"></textarea>
+          <mat-error *ngIf="remark.errors?.maxlength">
+            最多255个字符
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-actions" fxLayout="row">
+        <button type="submit" mat-raised-button color="primary" [disabled]="form.pristine || form.invalid || submitting">提交</button>
+        <a mat-button [routerLink]="['../../../']">取消</a>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+<div class="metric-bar" fxLayou="row" fxLayoutAlign="end end">
+  <app-standard-category-select name="metric1" [isDisabledOption]="isDisabledOption(0)" [(ngModel)]="metricValues[0]" (change)="onMetricChange()"></app-standard-category-select>
+  <span>VS</span>
+  <app-standard-category-select name="metric2" [isDisabledOption]="isDisabledOption(1)" [(ngModel)]="metricValues[1]" (change)="onMetricChange()"></app-standard-category-select>
+  <span>VS</span>
+  <app-standard-category-select name="metric3" [isDisabledOption]="isDisabledOption(2)" [(ngModel)]="metricValues[2]" (change)="onMetricChange()"></app-standard-category-select>
+</div>
+<div class="metric-datatable" *ngIf="buttonState">
+  <div (click)="renderDataView()" class="metric-datatable-button">数据表格</div>
+</div>
+<ux-chart style="height:320px;" [option]="option"></ux-chart>

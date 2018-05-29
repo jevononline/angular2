@@ -1,0 +1,9 @@
+<nav mat-tab-nav-bar>
+  <a mat-tab-link [routerLink]="[{view:'standard-asset-analysis'}]" [active]="view==='standard-asset-analysis'">资产统计</a>
+  <a mat-tab-link [routerLink]="[{view:'standard-usage-analysis'}]" [active]="view==='standard-usage-analysis'">标准使用排行</a>
+  <a mat-tab-link [routerLink]="[{view:'standard-revision-analysis'}]" [active]="view==='standard-revision-analysis'">标准变更及使用</a>
+</nav>
+
+<app-standard-asset-analysis *ngIf="view==='standard-asset-analysis'"></app-standard-asset-analysis>
+<app-standard-usage-analysis *ngIf="view==='standard-usage-analysis'"></app-standard-usage-analysis>
+<app-standard-revision-analysis *ngIf="view==='standard-revision-analysis'"></app-standard-revision-analysis>

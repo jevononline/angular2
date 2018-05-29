@@ -1,0 +1,31 @@
+<form novalidate autocomplete="off" (ngSubmit)="goBack()" #form="ngForm">
+  <div class="form-group">
+    <mat-form-field>
+      <input matInput placeholder="提出人" name="createdBy" disabled [value]="model.createdBy?.staff?.fullName">
+    </mat-form-field>
+  </div>
+
+  <div class="form-group">
+    <mat-form-field class="is-one-third">
+      <textarea matInput placeholder="审核意见" name="content" matTextareaAutosize matAutosizeMinRows="5" required [(ngModel)]="model.content"></textarea>
+      <mat-hint align="start" *ngIf="!afterSolicited">
+        <strong>标办审核要点：</strong> 1、标准是否合法合规；2、标准内容格式是否正确；3、标准是否符合计划要求
+      </mat-hint>
+      <mat-hint align="start" *ngIf="afterSolicited">
+        <strong>标办审核要点：</strong>1、各部门反馈意见是否被正确采纳
+      </mat-hint>
+    </mat-form-field>
+  </div>
+
+  <app-standard-revision-manager #srm mode="view" [flag]="1" [task]="task"></app-standard-revision-manager>
+
+  <div class="form-actions" fxLayout="row">
+    <button mat-raised-button color="primary" [disabled]="form.invalid || submitting">回退</button>
+    <button type="button" mat-raised-button color="primary" (click)="goOn()" [disabled]="srm.form.invalid || srm.form.pending || submitting">保存并发送下一环节</button>
+    <button type="button" mat-button [routerLink]="['/process-management/tasks']">取消</button>
+  </div>
+</form>
+
+<app-standard-revision-solicited-opinion-manager *ngIf="afterSolicited" [level]="2" [task]="task"></app-standard-revision-solicited-opinion-manager>
+
+<app-standard-revision-opinion-table [task]="task"></app-standard-revision-opinion-table>

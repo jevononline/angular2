@@ -1,0 +1,13 @@
+<ng-container *ngIf="isReady">
+  <ol *ngIf="list.length>0">
+    <li *ngFor="let item of list">
+      <div fxLayout="row">
+        <div fxFlex class="text-overflow-ellipses">
+          <a (click)="openDetailDialog(item.id)">{{item.title}}</a>
+        </div>
+        <span>{{item.startDate}}</span>
+      </div>
+    </li>
+  </ol>
+  <div *ngIf="list.length===0">无数据</div>
+</ng-container>

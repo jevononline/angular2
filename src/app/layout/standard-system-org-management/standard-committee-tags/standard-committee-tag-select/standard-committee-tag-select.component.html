@@ -1,0 +1,8 @@
+<mat-form-field>
+  <mat-select [placeholder]="placeholder" name="slt" class="is-full" [multiple]="multiple" [disabled]="disabled" [(ngModel)]="myModel" (selectionChange)="onChange()" (closed)="onClose()">
+    <mat-option>无</mat-option>
+    <mat-option *ngFor="let item of list" [value]="item.id" selected [disabled]="item.taken">
+      {{ item.name }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>

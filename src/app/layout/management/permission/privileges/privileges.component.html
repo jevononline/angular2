@@ -1,0 +1,19 @@
+<div class="panel">
+  <div class="panel-content">
+    <form novalidate autocomplete="off" (ngSubmit)="onSubmit()" #form="ngForm">
+
+      <div class="form-group">
+        <label class="required">文件</label>
+        <app-upload name="upload" required [(ngModel)]="file">
+          <button type="button" mat-icon-button>
+            <mat-icon>file_upload</mat-icon>
+          </button>
+        </app-upload>
+      </div>
+
+      <div class="form-actions" fxLayout="row">
+        <button type="submit" mat-raised-button color="primary" [disabled]="form.pristine || form.invalid || submitting">提交</button>
+      </div>
+    </form>
+  </div>
+</div>

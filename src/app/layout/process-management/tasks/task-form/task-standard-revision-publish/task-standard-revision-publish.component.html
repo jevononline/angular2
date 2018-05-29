@@ -1,0 +1,11 @@
+<div class="actions" fxLayout="row">
+  <button mat-raised-button color="primary" [disabled]="submitting" (click)="goOn()">标准发布</button>
+  <button type="button" mat-button [routerLink]="['/process-management/tasks']">取消</button>
+</div>
+
+
+<app-standard-revision-solicited-opinion-manager [management]="0" [level]="2" [task]="task"></app-standard-revision-solicited-opinion-manager>
+
+<app-standard-revision-manager mode="view" [task]="task"></app-standard-revision-manager>
+
+<app-standard-revision-opinion-table [task]="task"></app-standard-revision-opinion-table>

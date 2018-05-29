@@ -1,0 +1,12 @@
+<app-standard-revision-opinion-table [task]="task"></app-standard-revision-opinion-table>
+
+<app-standard-revision-solicited-opinion-manager #srsom [management]="2" [level]="2" [task]="task"></app-standard-revision-solicited-opinion-manager>
+
+<form novalidate autocomplete="off" (ngSubmit)="goOn()">
+  <div class="form-actions" fxLayout="row">
+    <button type="submit" mat-raised-button color="primary" [disabled]="submitting">保存并发送下一环节</button>
+    <button type="button" mat-button [routerLink]="['/process-management/tasks']">取消</button>
+  </div>
+</form>
+
+<app-standard-revision-manager #srm [task]="task"></app-standard-revision-manager>

@@ -1,0 +1,25 @@
+<div class="panel">
+  <div class="panel-content">
+    <form novalidate autocomplete="off" (ngSubmit)="onSubmit()" #form="ngForm">
+      <div class="form-group">
+        <mat-form-field>
+          <input matInput placeholder="角色名称" name="name" required validateUnique validateUrl="/api/roles/availability/{{model.id}}/name" [(ngModel)]="model.name" #name="ngModel">
+          <mat-error *ngIf="name.errors?.required">
+            角色名称必填
+          </mat-error>
+          <mat-error *ngIf="name.errors?.validateUnique">
+            角色名称已占用
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="form-group">
+        <label class="required">权限配置</label>
+        <app-privilege-select name="privileges" required [(ngModel)]="model.privileges"></app-privilege-select>
+      </div>
+      <div class="form-actions" fxLayout="row">
+        <button type="submit" mat-raised-button color="primary" [disabled]="form.pristine || form.invalid || form.pending || submitting">提交</button>
+        <a mat-button [routerLink]="['/management/permission/roles']">取消</a>
+      </div>
+    </form>
+  </div>
+</div>

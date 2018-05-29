@@ -1,0 +1,7 @@
+<nav mat-tab-nav-bar>
+  <a mat-tab-link (click)="selectedTab=0" [active]="selectedTab===0">岗位查标准</a>
+  <a mat-tab-link (click)="selectedTab=1" [active]="selectedTab===1">标准搜岗位</a>
+</nav>
+
+<app-post-standard-associations *ngIf="selectedTab===0" mode="view" [view]="1"></app-post-standard-associations>
+<app-post-standard-associations *ngIf="selectedTab===1" mode="view" [view]="2"></app-post-standard-associations>

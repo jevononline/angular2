@@ -1,0 +1,54 @@
+<form novalidate autocomplete="off" (ngSubmit)="onSubmit()" #form="ngForm">
+  <mat-dialog-content>
+    <div class="form-group">
+      <mat-form-field>
+        <input matInput [matDatepicker]="departmentReviewTimePicker" placeholder="部门审核日期" name="departmentReviewTime" [disabled]="isCompleted" required [(ngModel)]="model.departmentReviewTime" #departmentReviewTime="ngModel">
+        <mat-datepicker-toggle matSuffix [for]="departmentReviewTimePicker"></mat-datepicker-toggle>
+        <mat-datepicker #departmentReviewTimePicker></mat-datepicker>
+        <mat-error *ngIf="departmentReviewTime.errors?.required">
+          部门审核日期必填
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput [matDatepicker]="expertCommitteeReviewTimePicker" placeholder="专委会审核日期" name="expertCommitteeReviewTime" [disabled]="isCompleted" required [min]="model.departmentReviewTime" [(ngModel)]="model.expertCommitteeReviewTime" #expertCommitteeReviewTime="ngModel">
+        <mat-datepicker-toggle matSuffix [for]="expertCommitteeReviewTimePicker"></mat-datepicker-toggle>
+        <mat-datepicker #expertCommitteeReviewTimePicker></mat-datepicker>
+        <mat-error *ngIf="expertCommitteeReviewTime.errors?.required">
+          专委会审核日期必填
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput [matDatepicker]="standardCommitteeReviewTimePicker" placeholder="标委会审核日期" name="standardCommitteeReviewTime" [disabled]="isCompleted" required [min]="model.expertCommitteeReviewTime" [(ngModel)]="model.standardCommitteeReviewTime" #standardCommitteeReviewTime="ngModel">
+        <mat-datepicker-toggle matSuffix [for]="standardCommitteeReviewTimePicker"></mat-datepicker-toggle>
+        <mat-datepicker #standardCommitteeReviewTimePicker></mat-datepicker>
+        <mat-error *ngIf="standardCommitteeReviewTime.errors?.required">
+          标委会审核日期必填
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+
+    <div class="form-group">
+      <mat-form-field>
+        <input matInput placeholder="协管部门" name="coordinationDepartmentReviewDuration" type="number" [disabled]="isCompleted" required [min]="1" [(ngModel)]="model.coordinationDepartmentReviewDuration" #coordinationDepartmentReviewDuration="ngModel">
+        <span matSuffix>天</span>
+        <mat-error *ngIf="coordinationDepartmentReviewDuration.errors?.required">
+          协管部门天数必填
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="征求意见" name="draftReviewDuration" type="number" [disabled]="isCompleted" required [min]="1" [(ngModel)]="model.draftReviewDuration" #draftReviewDuration="ngModel">
+        <span matSuffix>天</span>
+        <mat-error *ngIf="draftReviewDuration.errors?.required">
+          征求意见天数必填
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button type="submit" mat-raised-button color="primary" [disabled]="form.pristine || form.invalid || submitting">提交</button>
+    <button type="button" mat-button mat-dialog-close>取消</button>
+  </mat-dialog-actions>
+
+</form>

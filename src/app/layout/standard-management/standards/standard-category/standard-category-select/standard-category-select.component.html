@@ -1,0 +1,5 @@
+<mat-form-field>
+  <mat-select [placeholder]="placeholder" name="status" [multiple]="multiple" [disabled]="disabled" (selectionChange)="onChange()" [(ngModel)]="myModel" [required]="required">
+    <mat-option *ngFor="let item of list" [value]="item.value" [disabled]="isDisabledOption(item)">{{item.name}}</mat-option>
+  </mat-select>
+</mat-form-field>

@@ -1,0 +1,6 @@
+<div fxFlex fxLayout="column">
+	<div class="task-info" fxLayout="row" fxLayoutAlign="start start">
+		<div class="title">操作人：{{task.createdBy.staff.fullName}}</div>
+		<div class="title">操作时间：{{task.createdAt | date: 'yyyy-MM-dd HH:mm:ss'}}</div>
+	</div>
+</div>

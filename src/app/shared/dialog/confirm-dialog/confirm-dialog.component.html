@@ -1,0 +1,14 @@
+<mat-dialog-content>
+  <div [ngSwitch]="data.id">
+    <p *ngSwitchCase="'delete'">确认删除“{{data.content}}”？</p>
+    <p *ngSwitchCase="'remove'">确认移除“{{data.content}}”？</p>
+    <p *ngSwitchCase="'remove-post-standard-association'">确认移除“{{data.content.postName}}”与“{{data.content.standardNo}}”的关联？</p>
+    <p *ngSwitchCase="'publishAnnouncement'">公告发布后不可修改，确认发布此公告吗？</p>
+
+    <p *ngSwitchDefault>?</p>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions fxLayout="row" fxLayoutAlign="start center">
+  <button mat-raised-button color="primary" [mat-dialog-close]="true">确认</button>
+  <button mat-button mat-dialog-close>取消</button>
+</mat-dialog-actions>

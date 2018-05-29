@@ -1,0 +1,74 @@
+<div class="panel">
+  <div class="panel-header">
+    <div fxFlex fxLayout="row">
+      <div class="actions" fxFlex="50" fxLayoutAlign="start center">
+        <button mat-raised-button color="primary" *ngIf="authService.check('/management/org@posts@create')" (click)="openFormDialog({action:'create',id:orgService.department.id})">新建岗位</button>
+        <button mat-raised-button color="primary" *ngIf="authService.check('/management/org@posts@import')" (click)="openImportDialog()">批量导入</button>
+      </div>
+      <div fxFlex="50" fxLayout="row" fxLayoutAlign="end center">
+        <mat-form-field class="is-half" floatPlaceholder="never">
+          <mat-icon matPrefix>search</mat-icon>
+          <input matInput #keyword placeholder="搜索">
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <div class="panel-body">
+    <ux-table-container>
+      <mat-table #table [dataSource]="dataSource" matSort matSortActive="id" matSortDisableClear matSortDirection="desc">
+        <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> 序号 </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> 名称 </mat-header-cell>
+          <mat-cell *matCellDef="let row">{{row.name}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="description">
+          <mat-header-cell *matHeaderCellDef> 岗位描述 </mat-header-cell>
+          <mat-cell *matCellDef="let row">{{row.description}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <mat-header-cell *matHeaderCellDef> 岗位状态 </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <ux-availability [available]="!row.isDisabled"></ux-availability>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="staffCount">
+          <mat-header-cell *matHeaderCellDef> 人员数 </mat-header-cell>
+          <mat-cell *matCellDef="let row">{{row.staffCount}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="createdAt">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> 创建时间 </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.createdAt | dateTime}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef> 操作 </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <button mat-icon-button matTooltip="查看" *ngIf="authService.check('/management/org@posts@read')" (click)="openFormDialog({action:'read',id:row.id})">
+              <mat-icon>insert_drive_file</mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="编辑" *ngIf="authService.check('/management/org@posts@update')" (click)="openFormDialog({action:'update',id:row.id})">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="删除" *ngIf="authService.check('/management/org@posts@delete')" (click)="openDeletionDialog(row)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+
+      <mat-paginator #paginator [length]="dataSource.total" [pageSize]="appConfig.pageSize" [pageSizeOptions]="appConfig.pageSizeOptions">
+      </mat-paginator>
+    </ux-table-container>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<form novalidate autocomplete="off" (ngSubmit)="goOn()" #form="ngForm">
+
+  <div class="form-group">
+    <app-department-select placeholder="部门" floatPlaceholder="always" name="department" disabled [(ngModel)]="department"></app-department-select>
+  </div>
+  <div class="form-group">
+    <app-user-select placeholder="编制人" name="user" required of="standard-network" [ofId]="department.id" level="descendant" [isDisabledOption]="isDisabledOption" [(ngModel)]="data"></app-user-select>
+  </div>
+
+  <div class="form-actions" fxLayout="row">
+    <button mat-raised-button color="primary" [disabled]="form.pristine || form.invalid || submitting">保存并发送下一环节</button>
+    <button type="button" mat-button [routerLink]="['/process-management/tasks']">取消</button>
+  </div>
+</form>

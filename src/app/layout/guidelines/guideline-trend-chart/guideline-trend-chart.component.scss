@@ -1,0 +1,33 @@
+@import '../../../../theme';
+ul {
+  li {
+    margin: 8px 0;
+    .mat-icon {
+      transform: rotate(125deg);
+      width: 48px;
+      height: 48px;
+      color: map-get($secondary, 500);
+      font-size: 48px;
+    }
+    .time-span {
+      text-align: right;
+      color: map-get($secondary, 500);
+      font-size: 18px;
+    }
+    .content {
+      overflow: hidden;
+      min-height: 64px;
+      max-height: 163px;
+      margin-left: 16px;
+      padding: 4px 16px;
+      background: #f4f4f4;
+      border-left: 2px solid map-get($secondary, 300);
+      line-height: 1.5;
+      font-size: 14px;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 7;
+    }
+  }
+}
