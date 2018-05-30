@@ -19,11 +19,49 @@ export class AuthResolve implements Resolve<any>{
 		return Observable.forkJoin(this.http.get<User>('/api/users/current'), this.http.get<string[]>('/api/actions')).map(data => {
 			let [user, actions] = data;
 
+			// ceshi
+			actions = [
+				"/system-management",
+				"/standard-management",
+				"/announcing",
+				"/guidelines",
+				"/superior-documents",
+				"/regulations",
+				"/regulations",
+				"/standard-system-org-management",
+				"/process-management",
+				"/process-management/processes",
+				"/process-management/processes",
+				"/process-management/tasks",
+				"/management",
+				"/process-management/work-plan",
+				"/standard-system-org-management",
+				"/management/announcements",
+				"/guidelines",
+				"/management/data-configuration",
+				"/evaluations",
+				"/evaluations/self",
+				"/evaluations/audits",
+				"/cost-management",
+				"/training",
+				"/training/study",
+				"/standard-analytics",
+				"/online-editing",
+				"/management",
+				"/management/org",
+				"/management/permission/users",
+				"/management/permission/roles",
+				"/management/permission",
+				"/management/data-configuration",
+				"/management/process-configuration",
+				"/process-management/tasks"
+			];
+
 			this.authService.currentUser = user;
 			this.authService.actions = { '/': true };
-			// actions.forEach(item => {
-			// 	this.authService.actions[item] = true;
-			// });
+			actions.forEach(item => {
+				this.authService.actions[item] = true;
+			});
 
 			return data;
 		});
