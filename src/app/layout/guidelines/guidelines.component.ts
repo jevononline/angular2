@@ -18,118 +18,115 @@ import { Guideline } from './guideline';
 
 
 @Component({
-  selector: 'app-guidelines',
-  templateUrl: './guidelines.component.html',
-  styleUrls: ['./guidelines.component.scss']
+	selector: 'app-guidelines',
+	templateUrl: './guidelines.component.html',
+	styleUrls: ['./guidelines.component.scss']
 })
 export class GuidelinesComponent implements OnInit {
 
-  displayedColumns = [];
+	displayedColumns = [];
 
-  @ViewChild(MatPaginator)
-  paginator: MatPaginator;
+	@ViewChild(MatPaginator)
+	paginator: MatPaginator;
 
-  @ViewChild(MatSort)
-  sort: MatSort;
+	@ViewChild(MatSort)
+	sort: MatSort;
 
-  @ViewChild('keyword')
-  keyword: ElementRef;
+	@ViewChild('keyword')
+	keyword: ElementRef;
 
-  categories: GuidelineCategory[] = [];
+	categories: GuidelineCategory[] = [];
 
-  dataSource: TableDataSource<Guideline>;
+	dataSource: TableDataSource<Guideline>;
 
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private dialog: MatDialog,
-    private snackBar: MatSnackBar,
-    @Inject(APP_CONFIG) public appConfig: AppConfig,
-    public authService: AuthService,
-    private guidelinesService: GuidelinesService
-  ) {
+	constructor(
+		private router: Router,
+		private route: ActivatedRoute,
+		private dialog: MatDialog,
+		private snackBar: MatSnackBar,
+		@Inject(APP_CONFIG) public appConfig: AppConfig,
+		public authService: AuthService,
+		private guidelinesService: GuidelinesService
+	) {
 
-    this.categories = this.getCategories();
+		this.categories = this.getCategories();
 
-  }
+	}
 
-  getCategories() {
-    let categories = this.route.snapshot.params.categories;
-    if (categories) {
-      return categories.split(',').map(item => ({ id: +item }));
-    } else {
-      return [];
-    }
-  }
+	getCategories() {
+		let categories = this.route.snapshot.params.categories;
+		if (categories) {
+			return categories.split(',').map(item => ({ id: +item }));
+		} else {
+			return [];
+		}
+	}
 
-  ngOnInit() {
-    this.displayedColumns = ['id', 'timeSpan', 'category', 'title', 'actions'];
+	ngOnInit() {
+		this.displayedColumns = ['id', 'timeSpan', 'category', 'title', 'actions'];
 
-    this.dataSource = new TableDataSource({
-      get: (tableQuery) => {
-        return this.guidelinesService.get({
-          ...tableQuery,
-          keyword: this.keyword.nativeElement.value,
-          categories: this.categories.map(item => item.id)
-        });
-      }
-    }, this.paginator, this.sort);
+		this.dataSource = new TableDataSource({
+			get: (tableQuery) => {
+				return this.guidelinesService.get({
+					...tableQuery,
+					keyword: this.keyword.nativeElement.value,
+					categories: this.categories.map(item => item.id)
+				});
+			}
+		}, this.paginator, this.sort);
 
-    this.route.params.subscribe(() => {
+		this.route.params.subscribe(() => {
 
-      this.categories = this.getCategories();
-      this.dataSource.refresh();
+			this.categories = this.getCategories();
+			this.dataSource.refresh();
 
-    })
+		})
 
-    Observable.fromEvent(this.keyword.nativeElement, 'keyup')
-      .filter((e: KeyboardEvent) => e.keyCode == 13)
-      .subscribe(() => {
-        this.dataSource.refresh();
-      });
-  }
+		Observable.fromEvent(this.keyword.nativeElement, 'keyup')
+			.filter((e: KeyboardEvent) => e.keyCode == 13)
+			.subscribe(() => {
+				this.dataSource.refresh();
+			});
+	}
 
-  openImportDialog() {
-    let dialogRef = this.dialog.open(ImportDialogComponent, {
-      data: {
-        filename: '方针目标模板.xlsx',
-        ticket: 'ZGF0YS1pbXBvcnQtdGVtcGxhdGVzL+aWuemSiOebruagh+aooeadvy54bHN4'
-      }
-    });
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.guidelinesService.import(result).subscribe(() => {
-          this.dataSource.refresh();
-          this.snackBar.open('导入成功', null, { duration: 3000 });
-        }, () => {
-          this.snackBar.open('导入失败', null, { duration: 3000, extraClasses: ['warn'] });
-        });
-      }
-    });
-  }
+	openImportDialog() {
+		let dialogRef = this.dialog.open(ImportDialogComponent, {
+			data: {
+				filename: '方针目标模板.xlsx',
+				ticket: 'ZGF0YS1pbXBvcnQtdGVtcGxhdGVzL+aWuemSiOebruagh+aooeadvy54bHN4'
+			}
+		});
+		dialogRef.afterClosed().subscribe((result) => {
+			if (result) {
+				this.guidelinesService.import(result).subscribe(() => {
+					this.dataSource.refresh();
+					this.snackBar.open('导入成功', null, { duration: 3000 });
+				}, () => {
+					this.snackBar.open('导入失败', null, { duration: 3000, extraClasses: ['warn'] });
+				});
+			}
+		});
+	}
 
-  openDeletionDialog(item) {
-    let dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      data: { id: 'delete', content: item.title }
-    });
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.guidelinesService.delete(item.id).subscribe(() => {
-          this.dataSource.refresh();
-          this.snackBar.open(`“${item.title}”已删除！`, null, {
-            duration: 2000
-          });
-        });
-      }
-    });
-  }
+	openDeletionDialog(item) {
+		let dialogRef = this.dialog.open(ConfirmDialogComponent, {
+			data: { id: 'delete', content: item.title }
+		});
+		dialogRef.afterClosed().subscribe((result) => {
+			if (result) {
+				this.guidelinesService.delete(item.id).subscribe(() => {
+					this.dataSource.refresh();
+					this.snackBar.open(`“${item.title}”已删除！`, null, {
+						duration: 2000
+					});
+				});
+			}
+		});
+	}
 
-  onCategorySelectClose(event) {
-    if (event.changed) {
-      this.router.navigate(['./', { categories: event.value.map(item => item.id).toString() }])
-    }
-  }
+	onCategorySelectClose(event) {
+		if (event.changed) {
+			this.router.navigate(['./', { categories: event.value.map(item => item.id).toString() }])
+		}
+	}
 }
-
-
-

@@ -3,13 +3,13 @@ import { Injectable, EventEmitter } from '@angular/core';
 @Injectable()
 export class TreeviewService {
 
-  view = new EventEmitter();
+	view = new EventEmitter();
 
-  activated: any;
+	activated: any;
 
-  constructor() { }
+	constructor() { }
 
-  refresh() {
-    this.view.next();
-  }
+	refresh() {
+		this.view.next();
+	}
 }

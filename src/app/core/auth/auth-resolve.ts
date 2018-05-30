@@ -11,21 +11,21 @@ import { AuthService } from './auth.service';
 @Injectable()
 export class AuthResolve implements Resolve<any>{
 
-  constructor(private http: HttpClient, private authService: AuthService) {
+	constructor(private http: HttpClient, private authService: AuthService) {
 
-  }
+	}
 
-  resolve() {
-    return Observable.forkJoin(this.http.get<User>('/api/users/current'), this.http.get<string[]>('/api/actions')).map(data => {
-      let [user, actions] = data;
+	resolve() {
+		return Observable.forkJoin(this.http.get<User>('/api/users/current'), this.http.get<string[]>('/api/actions')).map(data => {
+			let [user, actions] = data;
 
-      this.authService.currentUser = user;
-      this.authService.actions = { '/': true };
-      actions.forEach(item => {
-        this.authService.actions[item] = true;
-      });
+			this.authService.currentUser = user;
+			this.authService.actions = { '/': true };
+			// actions.forEach(item => {
+			// 	this.authService.actions[item] = true;
+			// });
 
-      return data;
-    });
-  }
+			return data;
+		});
+	}
 }

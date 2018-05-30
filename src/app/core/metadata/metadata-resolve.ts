@@ -7,14 +7,14 @@ import { MetadataService } from './metadata.service';
 @Injectable()
 export class MetadataResolve implements Resolve<any>{
 
-  constructor(private http: HttpClient, private metadataService: MetadataService) {
+	constructor(private http: HttpClient, private metadataService: MetadataService) {
 
-  }
+	}
 
-  resolve() {
-    return this.http.get<{ [key: string]: { [key: string]: IdNameValuePair } }>('/api/metadata').map(data => {
-      this.metadataService.data = data;
-      return data;
-    });
-  }
+	resolve() {
+		return this.http.get<{ [key: string]: { [key: string]: IdNameValuePair } }>('/api/metadata').map(data => {
+			this.metadataService.data = data;
+			return data;
+		});
+	}
 }

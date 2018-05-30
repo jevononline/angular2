@@ -1,7 +1,8 @@
 {
   "/api/*": {
-    "target": "http://web-dev.chiefclouds.com:3000",
+    "target": "http://localhost:9109",
     "secure": false,
+    "changeOrigin": true,
     "pathRewrite": {
       "^/api": ""
     }
